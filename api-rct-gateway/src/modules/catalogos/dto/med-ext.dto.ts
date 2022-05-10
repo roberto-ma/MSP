@@ -1,0 +1,33 @@
+export class ReadMedExtDto {
+  id: number;
+  cum: string;
+  atc: string;
+  generico: string;
+  formaFarmaceutica: string;
+  concentracion: string;
+  presentacion: string;
+  especialidad: string;
+  na1: string;
+  na2: string;
+  na3: string;
+  viaAdmin: string;
+  indicacionesCnmb: string;
+  indicacionesTerapeuticas: string;
+  dosificacion: string;
+  reaccionesAdversas: string;
+  contraindicaciones: string;
+  precausiones: string;
+  interacciones: string;
+  usoEmbarazoLactancia: string;
+  categoriaEmbarazoLactancia: string;
+  observaciones: string;
+  indicCnmb: string;
+  indicTerapeuticas: string;
+  dosis1: string;
+  dosis2: string;
+  reacc: string;
+  contra: string;
+  intera1: string;
+  intera2: string;
+  obs: string;
+}
