@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: integrasys-backend
+  description: Backend service for Integrasys API
+  annotations:
+    integrasys.quito.gob.ec/api-base-url: https://integrasys.quito.gob.ec/api
+spec:
+  type: service
+  owner: juan.perez@example.com
+  lifecycle: production
