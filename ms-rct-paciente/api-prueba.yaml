@@ -1,11 +1,9 @@
-swagger: "2.0"
+openapi: 3.0.3
 info:
   title: Integrasys API
   version: 1.0.0
-host: integrasys.quito.gob.ec
-basePath: /api
-schemes:
-  - https
+servers:
+  - url: https://integrasys.quito.gob.ec/api
 paths:
   /persona/general:
     get:
