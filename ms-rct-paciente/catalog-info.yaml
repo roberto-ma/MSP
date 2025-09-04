@@ -6,6 +6,6 @@ metadata:
 spec:
   type: openapi
   lifecycle: production
-  owner: juan.perez@example.com
+  owner: roberto@example.com
   definition: https://raw.githubusercontent.com/roberto-ma/MSP/dev/ms-rct-paciente/api-prueba.yaml
 Paso 4: Importa ese archivo catalog-info.yaml en Backstage
