@@ -1,4 +1,4 @@
-openapi: 3.0.3
+apiVersion: backstage.io/v1alpha1
 info:
   title: Integrasys API
   version: 1.0.0
