@@ -2,12 +2,14 @@ swagger: "2.0"
 info:
   title: Integrasys API
   version: 1.0.0
-servers:
-  - url: https://integrasys.quito.gob.ec
+host: integrasys.quito.gob.ec
+basePath: /api
+schemes:
+  - https
 paths:
   /persona/general:
     get:
-      summary: Obtener personas por cedula
+      summary: Obtener personas por cédula
       responses:
         '200':
           description: OK
