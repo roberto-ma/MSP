@@ -7,4 +7,4 @@ spec:
   type: openapi
   lifecycle: production
   owner: juan.perez@example.com
-  definition: https://integrasys.quito.gob.ec/api/openapi.yaml
+  definition: https://github.com/roberto-ma/MSP/blob/dev/ms-rct-paciente/api-prueba.yaml
