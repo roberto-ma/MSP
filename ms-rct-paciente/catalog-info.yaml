@@ -9,3 +9,5 @@ spec:
   type: service
   owner: juan.perez@example.com
   lifecycle: production
+  apis:
+    - integrasys-api
