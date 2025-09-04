@@ -1,0 +1,13 @@
+openapi: 3.0.3
+info:
+  title: Integrasys API
+  version: 1.0.0
+servers:
+  - url: https://integrasys.quito.gob.ec
+paths:
+  /persona/general:
+    get:
+      summary: Obtener personas por cedula
+      responses:
+        '200':
+          description: OK
