@@ -4,7 +4,7 @@ metadata:
   name: integrasys-api
   description: API pública de Integrasys
 spec:
-  type: swagger
+  type: openapi
   lifecycle: production
   owner: juan.maldonado@example.com
   definition: https://raw.githubusercontent.com/roberto-ma/MSP/dev/ms-rct-paciente/api-prueba.yaml
