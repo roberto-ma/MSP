@@ -1,11 +1,10 @@
-apiVersion: backstage.io/v1alpha1
+piVersion: backstage.io/v1alpha1
 kind: API
 metadata:
   name: integrasys-api
   description: API pública de Integrasys
 spec:
-  type: openapi
+  type:  Swagger 2.0
   lifecycle: production
-  owner: roberto@example.com
+  owner: juan.maldonado@example.com
   definition: https://raw.githubusercontent.com/roberto-ma/MSP/dev/ms-rct-paciente/api-prueba.yaml
-Paso 4: Importa ese archivo catalog-info.yaml en Backstage
