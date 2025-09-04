@@ -7,4 +7,4 @@ spec:
   type: swagger
   lifecycle: production
   owner: juan.maldonado@example.com
-  definition: https://raw.githubusercontent.com/roberto-ma/MSP/dev/ms-rct-paciente/api-prueba.yaml
+  definition: https://github.com/roberto-ma/MSP/blob/dev/ms-rct-paciente/api-prueba.yaml
