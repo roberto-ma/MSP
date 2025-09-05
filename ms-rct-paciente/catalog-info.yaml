@@ -17,7 +17,7 @@ spec:
       - url: /api/integrasys-api
         description: API Integrasys 
     paths:
-      /persona/{identificacionPersona}:
+      /persona/general/{identificacionPersona}:
         get:
           summary: Obtener personas por cedula
           parameters:
