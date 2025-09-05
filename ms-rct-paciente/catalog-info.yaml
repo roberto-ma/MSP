@@ -56,3 +56,12 @@ spec:
               description: Parametros invalidos
             '404':
               description: Persona no encontrada
+    components:
+      securitySchemes:
+        ApiKeyAuth:
+          type: apiKey
+          in: header
+          name: X-API-Key
+        BearerAuth:
+          type: http
+          scheme: bearer
