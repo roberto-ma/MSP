@@ -6,7 +6,7 @@ metadata:
 spec:
   type: openapi
   lifecycle: production
-  owner: juan.maldonado@example.com
+  owner: roberto.maldonado@example.com
   definition: |
     openapi: 3.0.3
     info:
@@ -14,8 +14,8 @@ spec:
       version: 1.0.0
       description: API para consulta de personas
     servers:
-      - url: /api/proxy/integrasys-api
-        description: API Integrasys via proxy de Backstage
+      - url: /api/integrasys-api
+        description: API Integrasys 
     paths:
       /persona/{identificacionPersona}:
         get:
