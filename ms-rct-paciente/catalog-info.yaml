@@ -53,33 +53,7 @@ spec:
                             example: "Perez Gonzalez"
                       message:
                         type: string
-                        example: "Consulta exitosa"
-            '400':
-              description: Parametros invalidos
-              content:
-                application/json:
-                  schema:
-                    type: object
-                    properties:
-                      success:
-                        type: boolean
-                        example: false
-                      error:
-                        type: string
-                        example: "Parametros invalidos"
-            '404':
-              description: Persona no encontrada
-              content:
-                application/json:
-                  schema:
-                    type: object
-                    properties:
-                      success:
-                        type: boolean
-                        example: false
-                      error:
-                        type: string
-                        example: "Persona no encontrada"
+                        example: "Consulta exitosa"            
     components:
       securitySchemes:
         ApiKeyAuth:
