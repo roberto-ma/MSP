@@ -2,49 +2,33 @@ apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
   name: integrasys-api
-  description: API pública de Integrasys para consulta de personas
-  tags:
-    - integrasys
-    - personas
-    - gobierno
-  annotations:
-    github.com/project-slug: roberto-ma/MSP
+  description: API pública de Integrasys
 spec:
   type: openapi
   lifecycle: production
   owner: juan.maldonado@example.com
-  system: integrasys-system
-  definition: |
+  definition:
     openapi: "3.0.3"
     info:
       title: Integrasys API
-      description: API pública de Integrasys para consulta de información de personas
-      version: 1.0.0
-      contact:
-        name: Juan Maldonado
-        email: juan.maldonado@example.com
-      license:
-        name: MIT
+      description: API pública de Integrasys
+      version: "1.0.0"
     servers:
-      - url: https://integrasys.quito.gob.ec/api
-        description: Servidor de producción
+      - url: "https://integrasys.quito.gob.ec/api"
     paths:
-      /persona/general:
+      "/persona/general":
         get:
-          summary: Obtener personas por cédula
-          description: Consulta información general de una persona usando su número de cédula
+          summary: "Obtener personas por cédula"
           parameters:
             - name: cedula
               in: query
               required: true
-              description: Número de cédula de la persona
               schema:
                 type: string
-                pattern: '^[0-9]{10}$'
                 example: "1234567890"
           responses:
-            '200':
-              description: Información de la persona encontrada exitosamente
+            "200":
+              description: "OK"
               content:
                 application/json:
                   schema:
@@ -52,101 +36,16 @@ spec:
                     properties:
                       success:
                         type: boolean
-                        example: true
                       data:
                         type: object
                         properties:
                           cedula:
                             type: string
-                            example: "1234567890"
                           nombres:
                             type: string
-                            example: "Juan Carlos"
                           apellidos:
                             type: string
-                            example: "Pérez González"
-                          fechaNacimiento:
-                            type: string
-                            format: date
-                            example: "1985-03-15"
-                          estadoCivil:
-                            type: string
-                            example: "SOLTERO"
-                          nacionalidad:
-                            type: string
-                            example: "ECUATORIANA"
-                      message:
-                        type: string
-                        example: "Consulta exitosa"
-            '400':
-              description: Parámetros inválidos
-              content:
-                application/json:
-                  schema:
-                    type: object
-                    properties:
-                      success:
-                        type: boolean
-                        example: false
-                      error:
-                        type: string
-                        example: "Número de cédula inválido"
-            '404':
-              description: Persona no encontrada
-              content:
-                application/json:
-                  schema:
-                    type: object
-                    properties:
-                      success:
-                        type: boolean
-                        example: false
-                      error:
-                        type: string
-                        example: "No se encontró información para la cédula proporcionada"
-            '500':
-              description: Error interno del servidor
-              content:
-                application/json:
-                  schema:
-                    type: object
-                    properties:
-                      success:
-                        type: boolean
-                        example: false
-                      error:
-                        type: string
-                        example: "Error interno del servidor"
-    components:
-      schemas:
-        Persona:
-          type: object
-          properties:
-            cedula:
-              type: string
-              description: Número de cédula
-            nombres:
-              type: string
-              description: Nombres de la persona
-            apellidos:
-              type: string
-              description: Apellidos de la persona
-            fechaNacimiento:
-              type: string
-              format: date
-              description: Fecha de nacimiento
-            estadoCivil:
-              type: string
-              description: Estado civil
-            nacionalidad:
-              type: string
-              description: Nacionalidad
-        Error:
-          type: object
-          properties:
-            success:
-              type: boolean
-              example: false
-            error:
-              type: string
-              description: Mensaje de error
+            "400":
+              description: "Bad Request"
+            "404":
+              description: "Not Found"
