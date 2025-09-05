@@ -14,7 +14,8 @@ spec:
       version: 1.0.0
       description: API para consulta de personas
     servers:
-      - url: https://integrasys.quito.gob.ec/api
+      - url: /api/proxy/integrasys-api
+        description: API Integrasys via proxy de Backstage
     paths:
       /persona/general:
         get:
@@ -23,6 +24,7 @@ spec:
             - name: identificacionPersona
               in: query
               required: true
+              description: "Numero de identificacion de la persona"
               schema:
                 type: string
                 example: "1234567890"
@@ -54,8 +56,30 @@ spec:
                         example: "Consulta exitosa"
             '400':
               description: Parametros invalidos
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+                        example: false
+                      error:
+                        type: string
+                        example: "Parametros invalidos"
             '404':
               description: Persona no encontrada
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+                        example: false
+                      error:
+                        type: string
+                        example: "Persona no encontrada"
     components:
       securitySchemes:
         ApiKeyAuth:
