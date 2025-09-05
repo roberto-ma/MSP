@@ -14,8 +14,8 @@ spec:
       version: 1.0.0
       description: API para consulta de personas
     servers:
-      - url: /api/proxy/integrasys-api
-        description: API Integrasys 
+      - url: https://integrasys.quito.gob.ec/api
+        description: API Integrasys (directo)
     paths:
       /persona/general/{identificacionPersona}:
         get:
@@ -44,7 +44,7 @@ spec:
                         properties:
                           identificacionPersona:
                             type: string
-                            example: "1234567890"
+                            example: "0603005299"
                           nombres:
                             type: string
                             example: "Juan Carlos"
