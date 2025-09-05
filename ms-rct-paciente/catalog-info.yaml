@@ -1,8 +1,8 @@
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
-  name: integrasys-api-test
-  description: Test API
+  name: integrasys-api
+  description: API publica de Integrasys
 spec:
   type: openapi
   lifecycle: production
@@ -10,11 +10,49 @@ spec:
   definition: |
     openapi: 3.0.3
     info:
-      title: Test API
+      title: Integrasys API
       version: 1.0.0
+      description: API para consulta de personas
+    servers:
+      - url: https://integrasys.quito.gob.ec/api
     paths:
-      /test:
+      /persona/general:
         get:
+          summary: Obtener personas por cedula
+          parameters:
+            - name: cedula
+              in: query
+              required: true
+              schema:
+                type: string
+                example: "1234567890"
           responses:
             '200':
-              description: OK
+              description: Persona encontrada
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+                        example: true
+                      data:
+                        type: object
+                        properties:
+                          cedula:
+                            type: string
+                            example: "1234567890"
+                          nombres:
+                            type: string
+                            example: "Juan Carlos"
+                          apellidos:
+                            type: string
+                            example: "Perez Gonzalez"
+                      message:
+                        type: string
+                        example: "Consulta exitosa"
+            '400':
+              description: Parametros invalidos
+            '404':
+              description: Persona no encontrada
