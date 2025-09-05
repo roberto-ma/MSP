@@ -20,7 +20,7 @@ spec:
         get:
           summary: Obtener personas por cedula
           parameters:
-            - name: cedula
+            - name: identificacionPersona
               in: query
               required: true
               schema:
@@ -40,7 +40,7 @@ spec:
                       data:
                         type: object
                         properties:
-                          cedula:
+                          identificacionPersona:
                             type: string
                             example: "1234567890"
                           nombres:
