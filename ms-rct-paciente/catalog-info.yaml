@@ -14,7 +14,7 @@ spec:
       version: 1.0.0
       description: API para consulta de personas
     servers:
-      - url: https://integrasys.quito.gob.ec/api
+      - url: https://integrasys.quito111.gob.ec/api
     paths:
       /persona/general:
         get:
