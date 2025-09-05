@@ -1,14 +1,20 @@
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
-  name: integrasys-api
-  description: API pública de Integrasys para consulta de personas
-  tags:
-    - integrasys
-    - personas
-    - gobierno
+  name: integrasys-api-test
+  description: Test API
 spec:
   type: openapi
   lifecycle: production
   owner: juan.maldonado@example.com
-  definition: https://raw.githubusercontent.com/roberto-ma/MSP/dev/ms-rct-paciente/api-prueba.yaml
+  definition: |
+    openapi: 3.0.3
+    info:
+      title: Test API
+      version: 1.0.0
+    paths:
+      /test:
+        get:
+          responses:
+            '200':
+              description: OK
