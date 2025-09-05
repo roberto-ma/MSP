@@ -2,50 +2,13 @@ apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
   name: integrasys-api
-  description: API pública de Integrasys
+  description: API pública de Integrasys para consulta de personas
+  tags:
+    - integrasys
+    - personas
+    - gobierno
 spec:
   type: openapi
   lifecycle: production
   owner: juan.maldonado@example.com
-  definition: |
-    openapi: "3.0.3"
-    info:
-      title: "Integrasys API"
-      description: "API pública de Integrasys"
-      version: "1.0.0"
-    servers:
-      - url: "https://integrasys.quito.gob.ec/api"
-    paths:
-      /persona/general:
-        get:
-          summary: "Obtener personas por cédula"
-          parameters:
-            - name: cedula
-              in: query
-              required: true
-              schema:
-                type: string
-                example: "1234567890"
-          responses:
-            "200":
-              description: "OK"
-              content:
-                application/json:
-                  schema:
-                    type: object
-                    properties:
-                      success:
-                        type: boolean
-                      data:
-                        type: object
-                        properties:
-                          cedula:
-                            type: string
-                          nombres:
-                            type: string
-                          apellidos:
-                            type: string
-            "400":
-              description: "Bad Request"
-            "404":
-              description: "Not Found"
+  definition: https://raw.githubusercontent.com/roberto-ma/MSP/dev/ms-rct-paciente/api-prueba.yaml
