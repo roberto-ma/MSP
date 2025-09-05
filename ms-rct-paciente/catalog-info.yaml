@@ -17,17 +17,17 @@ spec:
       - url: /api/proxy/integrasys-api
         description: API Integrasys via proxy de Backstage
     paths:
-      /persona/general:
+      /persona/{identificacionPersona}:
         get:
           summary: Obtener personas por cedula
           parameters:
             - name: identificacionPersona
-              in: query
+              in: path
               required: true
               description: "Numero de identificacion de la persona"
               schema:
                 type: string
-                example: "1234567890"
+                example: "0603005299"
           responses:
             '200':
               description: Persona encontrada
@@ -53,7 +53,33 @@ spec:
                             example: "Perez Gonzalez"
                       message:
                         type: string
-                        example: "Consulta exitosa"            
+                        example: "Consulta exitosa"
+            '400':
+              description: Parametros invalidos
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+                        example: false
+                      error:
+                        type: string
+                        example: "Parametros invalidos"
+            '404':
+              description: Persona no encontrada
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+                        example: false
+                      error:
+                        type: string
+                        example: "Persona no encontrada"
     components:
       securitySchemes:
         ApiKeyAuth:
