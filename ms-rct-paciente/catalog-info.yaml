@@ -2,7 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
   name: integrasys-api
-  description: API publica de Integrasys
+  description: API publica de Integrasys (Integración de sistemas)
 spec:
   type: openapi
   lifecycle: production
