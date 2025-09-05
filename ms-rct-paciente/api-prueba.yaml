@@ -1,146 +1,104 @@
-openapi: 3.0.3
+openapi: "3.0.3"
 info:
-  title: Integrasys API
-  description: API pública de Integrasys para consulta de información de personas
-  version: 1.0.0
+  title: "Integrasys API"
+  description: "API pública de Integrasys para consulta de información de personas"
+  version: "1.0.0"
   contact:
-    name: Juan Maldonado
-    email: juan.maldonado@example.com
-  license:
-    name: MIT
+    name: "Juan Maldonado"
+    email: "juan.maldonado@example.com"
 
 servers:
-  - url: https://integrasys.quito.gob.ec/api
-    description: Servidor de producción
+  - url: "https://integrasys.quito.gob.ec/api"
+    description: "Servidor de producción"
 
 paths:
   /persona/general:
     get:
-      summary: Obtener personas por cédula
-      description: Consulta información general de una persona usando su número de cédula
+      summary: "Obtener personas por cédula"
+      description: "Consulta información general de una persona usando su número de cédula"
       tags:
-        - Personas
+        - "Personas"
       parameters:
-        - name: cedula
+        - name: "cedula"
           in: query
           required: true
-          description: Número de cédula de la persona
+          description: "Número de cédula de la persona (10 dígitos)"
           schema:
             type: string
-            pattern: '^[0-9]{10}$'
+            pattern: "^[0-9]{10}$"
             example: "1234567890"
       responses:
-        '200':
-          description: Información de la persona encontrada exitosamente
+        "200":
+          description: "Información de la persona encontrada exitosamente"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PersonaResponse'
-              example:
-                success: true
-                data:
-                  cedula: "1234567890"
-                  nombres: "Juan Carlos"
-                  apellidos: "Pérez González"
-                  fechaNacimiento: "1985-03-15"
-                  estadoCivil: "SOLTERO"
-                  nacionalidad: "ECUATORIANA"
-                message: "Consulta exitosa"
-        '400':
-          description: Parámetros inválidos
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      cedula:
+                        type: string
+                        example: "1234567890"
+                      nombres:
+                        type: string
+                        example: "Juan Carlos"
+                      apellidos:
+                        type: string
+                        example: "Pérez González"
+                      fechaNacimiento:
+                        type: string
+                        format: date
+                        example: "1985-03-15"
+                      estadoCivil:
+                        type: string
+                        example: "SOLTERO"
+                      nacionalidad:
+                        type: string
+                        example: "ECUATORIANA"
+                  message:
+                    type: string
+                    example: "Consulta exitosa"
+        "400":
+          description: "Parámetros inválidos"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                success: false
-                error: "Número de cédula inválido"
-        '404':
-          description: Persona no encontrada
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error:
+                    type: string
+                    example: "Número de cédula inválido"
+        "404":
+          description: "Persona no encontrada"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                success: false
-                error: "No se encontró información para la cédula proporcionada"
-        '500':
-          description: Error interno del servidor
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error:
+                    type: string
+                    example: "No se encontró información para la cédula proporcionada"
+        "500":
+          description: "Error interno del servidor"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                success: false
-                error: "Error interno del servidor"
-
-components:
-  schemas:
-    Persona:
-      type: object
-      required:
-        - cedula
-        - nombres
-        - apellidos
-      properties:
-        cedula:
-          type: string
-          description: Número de cédula
-          pattern: '^[0-9]{10}$'
-          example: "1234567890"
-        nombres:
-          type: string
-          description: Nombres de la persona
-          example: "Juan Carlos"
-        apellidos:
-          type: string
-          description: Apellidos de la persona
-          example: "Pérez González"
-        fechaNacimiento:
-          type: string
-          format: date
-          description: Fecha de nacimiento
-          example: "1985-03-15"
-        estadoCivil:
-          type: string
-          description: Estado civil
-          enum: ["SOLTERO", "CASADO", "DIVORCIADO", "VIUDO", "UNIÓN_LIBRE"]
-          example: "SOLTERO"
-        nacionalidad:
-          type: string
-          description: Nacionalidad
-          example: "ECUATORIANA"
-
-    PersonaResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: true
-        data:
-          $ref: '#/components/schemas/Persona'
-        message:
-          type: string
-          example: "Consulta exitosa"
-
-    ErrorResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: false
-        error:
-          type: string
-          description: Mensaje de error
-          example: "Error en la consulta"
-
-  parameters:
-    CedulaParam:
-      name: cedula
-      in: query
-      required: true
-      description: Número de cédula de la persona
-      schema:
-        type: string
-        pattern: '^[0-9]{10}$'
-        example: "1234567890"
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error:
+                    type: string
+                    example: "Error interno del servidor"
