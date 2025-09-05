@@ -7,16 +7,16 @@ spec:
   type: openapi
   lifecycle: production
   owner: juan.maldonado@example.com
-  definition:
+  definition: |
     openapi: "3.0.3"
     info:
-      title: Integrasys API
-      description: API pública de Integrasys
+      title: "Integrasys API"
+      description: "API pública de Integrasys"
       version: "1.0.0"
     servers:
       - url: "https://integrasys.quito.gob.ec/api"
     paths:
-      "/persona/general":
+      /persona/general:
         get:
           summary: "Obtener personas por cédula"
           parameters:
