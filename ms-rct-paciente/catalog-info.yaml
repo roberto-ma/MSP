@@ -19,8 +19,6 @@ spec:
   lifecycle: production
   system: integrasys
   owner: roberto.maldonado@quito.gob.ec
-  providesApis:
-    - integrasys-api 
   definition: |
     openapi: 3.0.3
     info:
