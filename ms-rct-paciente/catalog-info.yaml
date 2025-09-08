@@ -3,6 +3,9 @@ kind: API
 metadata:
   name: integrasys-api
   description: API publica de Integrasys (Integración de sistemas)
+  tags:
+   - personas
+   - autenticacion
 spec:
   type: openapi
   lifecycle: production
