@@ -1,104 +1,11 @@
-openapi: "3.0.3"
-info:
-  title: "Integrasys API"
-  description: "API pública de Integrasys para consulta de información de personas"
-  version: "1.0.0"
-  contact:
-    name: "Juan Maldonado"
-    email: "juan.maldonado@example.com"
-
-servers:
-  - url: "https://integrasys.quito.gob.ec/api"
-    description: "Servidor de producción"
-
-paths:
-  /persona/general:
-    get:
-      summary: "Obtener personas por cédula"
-      description: "Consulta información general de una persona usando su número de cédula"
-      tags:
-        - "Personas"
-      parameters:
-        - name: "cedula"
-          in: query
-          required: true
-          description: "Número de cédula de la persona (10 dígitos)"
-          schema:
-            type: string
-            pattern: "^[0-9]{10}$"
-            example: "1234567890"
-      responses:
-        "200":
-          description: "Información de la persona encontrada exitosamente"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    type: object
-                    properties:
-                      cedula:
-                        type: string
-                        example: "1234567890"
-                      nombres:
-                        type: string
-                        example: "Juan Carlos"
-                      apellidos:
-                        type: string
-                        example: "Pérez González"
-                      fechaNacimiento:
-                        type: string
-                        format: date
-                        example: "1985-03-15"
-                      estadoCivil:
-                        type: string
-                        example: "SOLTERO"
-                      nacionalidad:
-                        type: string
-                        example: "ECUATORIANA"
-                  message:
-                    type: string
-                    example: "Consulta exitosa"
-        "400":
-          description: "Parámetros inválidos"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  error:
-                    type: string
-                    example: "Número de cédula inválido"
-        "404":
-          description: "Persona no encontrada"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  error:
-                    type: string
-                    example: "No se encontró información para la cédula proporcionada"
-        "500":
-          description: "Error interno del servidor"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  error:
-                    type: string
-                    example: "Error interno del servidor"
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: integrasys-backend      # Nombre único para este componente
+  description: Backend que provee la API Integrasys
+  owner: roberto.maldonado@quito.gob.ec
+spec:
+  type: service                 # Puede ser "service", "library", etc.
+  lifecycle: production
+  providesApis:
+    - integrasys-api           
