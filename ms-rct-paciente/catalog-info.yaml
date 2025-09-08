@@ -6,6 +6,7 @@ metadata:
   tags:
    - personas
    - autenticacion
+  system: integrasys
 spec:
   type: openapi
   lifecycle: production
