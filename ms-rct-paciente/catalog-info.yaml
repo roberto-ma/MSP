@@ -6,7 +6,7 @@ metadata:
 spec:
   type: openapi
   lifecycle: production
-  owner: roberto.maldonado@example.com
+  owner: roberto.maldonado@quito.gob.ec
   definition: |
     openapi: 3.0.3
     info:
