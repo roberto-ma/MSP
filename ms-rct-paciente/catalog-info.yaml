@@ -15,7 +15,7 @@ spec:
       description: API para consulta de personas
     servers:
       - url: https://integrasys.quito.gob.ec
-        description: API Integrasys 
+        description: API Integrasys
     paths:
       /persona/general/{identificacionPersona}:
         get:
@@ -54,7 +54,57 @@ spec:
                       message:
                         type: string
                         example: "Consulta exitosa"
-            
+          security:
+            - BearerAuth: []
+      /auth/login:
+        post:
+          summary: Genera el Token
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    usuario:
+                      type: string
+                      example: "usuario-int"
+                    contrasena:
+                      type: string
+                      example: "Pxxxx_148"
+          responses:
+            '201':
+              description: Token generado exitosamente
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                        example: "string"
+                      expires_in:
+                        type: integer
+                        example: 0
+                      refresh_expires_in:
+                        type: integer
+                        example: 0
+                      refresh_token:
+                        type: string
+                        example: "string"
+                      token_type:
+                        type: string
+                        example: "string"
+                      not-before-policy:
+                        type: integer
+                        example: 0
+                      session_state:
+                        type: string
+                        example: "string"
+                      scope:
+                        type: string
+                        example: "string"
+          security: []  # No requiere autenticación para login
     components:
       securitySchemes:
         ApiKeyAuth:
@@ -64,3 +114,6 @@ spec:
         BearerAuth:
           type: http
           scheme: bearer
+          bearerFormat: JWT
+    security:
+      - BearerAuth: []
