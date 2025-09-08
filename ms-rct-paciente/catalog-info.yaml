@@ -3,6 +3,13 @@ kind: API
 metadata:
   name: integrasys-api
   description: API publica de Integrasys (Integración de sistemas)
+  links:
+    - url: https://integrasys.quito.gob.ec/api
+      title: Documentación Swagger
+      icon: docs
+    - url: https://integrasys.quito.gob.ec
+      title: Entorno Productivo
+      icon: web
   tags:
    - personas
    - autenticacion
