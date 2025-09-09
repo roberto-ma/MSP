@@ -2,28 +2,33 @@ apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
   name: soap-personas
-  description: Servicio SOAP para consulta de personas en MDMQ
+  description: >
+    Servicio SOAP para consulta de personas en MDMQ.  
+    Documentación visual con ejemplos y detalles para facilitar su uso.
   tags:
     - soap
     - personas
   links:
     - url: https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?wsdl
-      title: WSDL
+      title: 📄 WSDL Oficial
       icon: docs
 spec:
-  type: other
+  type: soap
   lifecycle: production
   owner: roberto.maldonado@quito.gob.ec
   system: integrasys
   definition: |
-    ## Endpoint SOAP
-    **Endpoint**: `https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx`  
-    **SOAPAction**: `"http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto"`  
-    **WSDL**: [Ver WSDL](https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?wsdl)
+    ## 🚀 Endpoint SOAP
+
+    - **URL:** `https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx`
+    - **SOAPAction:** `"http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto"`
+    - **WSDL:** [Ver WSDL oficial](https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?wsdl)
 
     ---
 
-    ### 🔐 Autenticación (en el header SOAP)
+    ## 🔐 Autenticación SOAP (Header)
+
+    Se debe incluir en el header del SOAP los siguientes elementos para autenticación:
 
     ```xml
     <soap:Header>
@@ -36,7 +41,7 @@ spec:
 
     ---
 
-    ### 📤 Ejemplo de Request
+    ## 📤 Ejemplo de Request SOAP
 
     ```xml
     <?xml version="1.0" encoding="utf-8"?>
@@ -61,7 +66,7 @@ spec:
 
     ---
 
-    ### 📥 Ejemplo de Response
+    ## 📥 Ejemplo de Response SOAP
 
     ```http
     HTTP/1.1 200 OK
@@ -104,16 +109,17 @@ spec:
     </soap:Envelope>
     ```
 
-    ---
+---
 
-    ### ⚙️ ¿Cómo probar este servicio SOAP?
+### Opcional: Agrega emojis, negritas, y secciones para hacerlo más amigable.
 
-    Puedes usar herramientas especializadas para servicios SOAP como:
+---
 
-    - **[SoapUI](https://www.soapui.org/):** Importa el WSDL desde [aquí](https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?wsdl), configura la autenticación en el header SOAP y realiza llamadas con los ejemplos proporcionados.
+### ¿Quieres te arme también un pequeño README.md para que tu equipo pueda copiar/pegar y entender rápido?
 
-    - **[Postman](https://www.postman.com/):** Crea una petición POST, pega el XML de request en el cuerpo, configura el header `SOAPAction` con el valor `"http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto"` y el header `Content-Type` a `text/xml; charset=utf-8`.
+---
 
-    ---
+**En resumen:**  
+No hay forma de hacer un Swagger UI para SOAP “automágicamente” en Backstage, pero con buena estructura Markdown + YAML se ve bastante profesional y fácil de leer.
 
-    Nota: Debido a que SOAP es un protocolo diferente a REST, este servicio no tiene interfaz Swagger UI para pruebas interactivas nativas en Backstage.
+¿Quieres que te ayude a darle un toque extra con tablas o un diseño más elaborado?
