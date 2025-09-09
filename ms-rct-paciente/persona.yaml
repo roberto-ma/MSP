@@ -2,15 +2,16 @@ apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
   name: soap-personas
-  description: >
-    Servicio SOAP para consulta de personas en MDMQ.  
-    Documentación visual con ejemplos y detalles para facilitar su uso.
+  description: Servicio SOAP para consulta de personas en MDMQ
   tags:
     - soap
     - personas
   links:
     - url: https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?wsdl
-      title: 📄 WSDL Oficial
+      title: Archivo WSDL oficial
+      icon: docs
+    - url: https://www.wsdlviewer.com/?wsdl=https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?wsdl
+      title: Visor WSDL Online
       icon: docs
 spec:
   type: soap
@@ -18,17 +19,19 @@ spec:
   owner: roberto.maldonado@quito.gob.ec
   system: integrasys
   definition: |
-    ## 🚀 Endpoint SOAP
+    # SOAP Personas - API Documentation
 
-    - **URL:** `https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx`
-    - **SOAPAction:** `"http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto"`
-    - **WSDL:** [Ver WSDL oficial](https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?wsdl)
+    ## 📡 Endpoint SOAP
+
+    | Parámetro  | Valor                                                                                  |
+    |------------|----------------------------------------------------------------------------------------|
+    | **Endpoint**  | `https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx`          |
+    | **SOAPAction** | `"http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto"`                        |
+    | **WSDL**      | [Ver WSDL](https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?wsdl) |
 
     ---
 
-    ## 🔐 Autenticación SOAP (Header)
-
-    Se debe incluir en el header del SOAP los siguientes elementos para autenticación:
+    ## 🔐 Autenticación (en el header SOAP)
 
     ```xml
     <soap:Header>
@@ -41,7 +44,7 @@ spec:
 
     ---
 
-    ## 📤 Ejemplo de Request SOAP
+    ## 📤 Ejemplo de Request
 
     ```xml
     <?xml version="1.0" encoding="utf-8"?>
@@ -66,7 +69,7 @@ spec:
 
     ---
 
-    ## 📥 Ejemplo de Response SOAP
+    ## 📥 Ejemplo de Response
 
     ```http
     HTTP/1.1 200 OK
@@ -107,8 +110,3 @@ spec:
         </fn_consulta_buscarPersonaCompletoResponse>
       </soap:Body>
     </soap:Envelope>
-    ```
-
-No hay forma de hacer un Swagger UI para SOAP “automágicamente” en Backstage, pero con buena estructura Markdown + YAML se ve bastante profesional y fácil de leer.
-
-¿Quieres que te ayude a darle un toque extra con tablas o un diseño más elaborado?
