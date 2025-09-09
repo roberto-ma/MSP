@@ -2,7 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
   name: soap-personas
-  description: Servicio SOAP para consulta de personas en MDMQ
+  description: Servicios SOAP para consulta de personas en MDMQ
   tags:
     - soap
     - personas
@@ -17,21 +17,17 @@ spec:
   type: soap
   lifecycle: production
   owner: roberto.maldonado@quito.gob.ec
-  system: ServicePersonas
+  system: integrasys
   definition: |
-    # SOAP Personas - API Documentation
+    # 📘 Documentación Servicios SOAP - Personas MDMQ
 
-    ## 📡 Endpoint SOAP
-
-    | Parámetro  | Valor                                                                                  |
-    |------------|----------------------------------------------------------------------------------------|
-    | **Endpoint**  | `https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx`          |
-    | **SOAPAction** | `"http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto"`                        |
-    | **WSDL**      | [Ver WSDL](https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?wsdl) |
+    ## 📡 Endpoint General
+    - **URL**: `https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx`
+    - **WSDL**: [Ver WSDL](https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?wsdl)
 
     ---
 
-    ## 🔐 Autenticación (en el header SOAP)
+    ## 🔐 Autenticación (en el Header SOAP)
 
     ```xml
     <soap:Header>
@@ -44,10 +40,13 @@ spec:
 
     ---
 
-    ## 📤 Ejemplo de Request
+    ## 📌 Servicio 1: `fn_consulta_buscarPersonaCompleto`
+
+    - **SOAPAction**: `"http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto"`
+
+    ### 📤 Request
 
     ```xml
-    <?xml version="1.0" encoding="utf-8"?>
     <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                    xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
@@ -67,17 +66,9 @@ spec:
     </soap:Envelope>
     ```
 
-    ---
-
-    ## 📥 Ejemplo de Response
-
-    ```http
-    HTTP/1.1 200 OK
-    Content-Type: text/xml; charset=utf-8
-    ```
+    ### 📥 Response
 
     ```xml
-    <?xml version="1.0" encoding="utf-8"?>
     <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                    xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
@@ -87,26 +78,59 @@ spec:
           <strMensaje>Consulta exitosa</strMensaje>
           <perPersona>
             <PE_PERSONA_ID>123456</PE_PERSONA_ID>
-            <PE_DENOMINACION>Sr.</PE_DENOMINACION>
-            <PE_NOMBRES>Juan Carlos</PE_NOMBRES>
-            <PE_APELLIDOS>Perez Gonzalez</PE_APELLIDOS>
-            <PE_RAZON_SOCIAL>Juan Carlos Perez Gonzalez</PE_RAZON_SOCIAL>
-            <PE_NUM_IDENTIFICACION>0603005299</PE_NUM_IDENTIFICACION>
-            <PE_TIP_IDENTIFICACION>C</PE_TIP_IDENTIFICACION>
-            <PE_TIP_PERSONA>NATURAL</PE_TIP_PERSONA>
-            <PE_MAIL>juan.perez@example.com</PE_MAIL>
-            <PE_ESTADO_TRAN>ACT</PE_ESTADO_TRAN>
-            <PE_ESTADO_DESC>Activo</PE_ESTADO_DESC>
-            <PE_FECHA_NACIMIENTO>1980-05-10T00:00:00</PE_FECHA_NACIMIENTO>
-            <PE_FECHA_FALLECIMIENTO xsi:nil="true" />
-            <PE_FECH_INSC_FALLECIMIENTO xsi:nil="true" />
-            <PE_ESTADO_CIVIL>CASADO</PE_ESTADO_CIVIL>
-            <PE_CEDULA_CONYUGE>0102030405</PE_CEDULA_CONYUGE>
-            <PE_NOMBRE_CONYUGE>Maria Lopez</PE_NOMBRE_CONYUGE>
-            <PE_NACIONALIDAD>Ecuatoriana</PE_NACIONALIDAD>
-            <PE_CELULAR>0999999999</PE_CELULAR>
-            <PE_TELEFONO>022345678</PE_TELEFONO>
+            <PE_NOMBRES>Juan</PE_NOMBRES>
+            <PE_APELLIDOS>Perez</PE_APELLIDOS>
+            <!-- ...otros campos... -->
           </perPersona>
         </fn_consulta_buscarPersonaCompletoResponse>
       </soap:Body>
     </soap:Envelope>
+    ```
+
+    ---
+
+    ## 📌 Servicio 2: `fn_consulta_buscarPersonaNaturalBaseLocalSeguridades`
+
+    - **SOAPAction**: `"http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaNaturalBaseLocalSeguridades"`
+
+    ### 📤 Request
+
+    ```xml
+    <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                   xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+      <soap:Header>
+        <Cabecera xmlns="http://mdmq.quito.gob.ec/">
+          <UserName>usuario</UserName>
+          <Password>clave</Password>
+        </Cabecera>
+      </soap:Header>
+      <soap:Body>
+        <fn_consulta_buscarPersonaNaturalBaseLocalSeguridades xmlns="http://mdmq.quito.gob.ec/">
+          <strIdentificacion>0603005299</strIdentificacion>
+          <strTipoIdentificacion>C</strTipoIdentificacion>
+        </fn_consulta_buscarPersonaNaturalBaseLocalSeguridades>
+      </soap:Body>
+    </soap:Envelope>
+    ```
+
+    ### 📥 Response
+
+    ```xml
+    <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                   xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+      <soap:Body>
+        <fn_consulta_buscarPersonaNaturalBaseLocalSeguridadesResponse xmlns="http://mdmq.quito.gob.ec/">
+          <fn_consulta_buscarPersonaNaturalBaseLocalSeguridadesResult>1</fn_consulta_buscarPersonaNaturalBaseLocalSeguridadesResult>
+          <strMensaje>Consulta exitosa</strMensaje>
+          <perPersona>
+            <PE_PERSONA_ID>987654</PE_PERSONA_ID>
+            <PE_NOMBRES>Maria</PE_NOMBRES>
+            <PE_APELLIDOS>Lopez</PE_APELLIDOS>
+            <!-- ...otros campos... -->
+          </perPersona>
+        </fn_consulta_buscarPersonaNaturalBaseLocalSeguridadesResponse>
+      </soap:Body>
+    </soap:Envelope>
+    ```
