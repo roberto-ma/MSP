@@ -1,105 +1,87 @@
-openapi: 3.0.3
-info:
-  title: MDMQ Personas SOAP API
-  version: 1.0.0
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: MDMQ Personas SOAP API
   description: API SOAP para consultar personas y proveedores telefónicos en MDMQ Quito
-servers:
-  - url: https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx
-paths:
-  /:
-    post:
-      summary: fn_consulta_buscarPersonaCompleto
-      operationId: buscarPersonaCompleto
-      requestBody:
-        description: SOAP request para buscar persona completa
-        required: true
-        content:
-          text/xml:
-            schema:
-              type: string
-              example: |
-                <?xml version="1.0" encoding="utf-8"?>
-                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-                  <soap:Header>
-                    <Cabecera xmlns="http://mdmq.quito.gob.ec/">
-                      <UserName>string</UserName>
-                      <Password>string</Password>
-                    </Cabecera>
-                  </soap:Header>
-                  <soap:Body>
-                    <fn_consulta_buscarPersonaCompleto xmlns="http://mdmq.quito.gob.ec/">
-                      <strIdentificacion>string</strIdentificacion>
-                      <strTipoIdentificacion>string</strTipoIdentificacion>
-                      <strAccion>string</strAccion>
-                    </fn_consulta_buscarPersonaCompleto>
-                  </soap:Body>
-                </soap:Envelope>
-      responses:
-        '200':
-          description: Respuesta SOAP exitosa
-          content:
-            text/xml:
-              schema:
-                type: string
-                example: |
-                  <?xml version="1.0" encoding="utf-8"?>
-                  <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-                    <soap:Body>
-                      <fn_consulta_buscarPersonaCompletoResponse xmlns="http://mdmq.quito.gob.ec/">
-                        <fn_consulta_buscarPersonaCompletoResult>int</fn_consulta_buscarPersonaCompletoResult>
-                        <strMensaje>string</strMensaje>
-                        <perPersona>
-                          <PE_PERSONA_ID>long</PE_PERSONA_ID>
-                          <PE_DENOMINACION>string</PE_DENOMINACION>
-                          <!-- Más campos -->
-                        </perPersona>
-                      </fn_consulta_buscarPersonaCompletoResponse>
-                    </soap:Body>
-                  </soap:Envelope>
-  /proveedor_telf:
-    post:
-      summary: fn_consulta_proveedor_telf
-      operationId: proveedorTelf
-      requestBody:
-        description: SOAP request para consultar proveedores telefónicos
-        required: true
-        content:
-          text/xml:
-            schema:
-              type: string
-              example: |
-                <?xml version="1.0" encoding="utf-8"?>
-                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-                  <soap:Header>
-                    <Cabecera xmlns="http://mdmq.quito.gob.ec/">
-                      <UserName>string</UserName>
-                      <Password>string</Password>
-                    </Cabecera>
-                  </soap:Header>
-                  <soap:Body>
-                    <fn_consulta_proveedor_telf xmlns="http://mdmq.quito.gob.ec/" />
-                  </soap:Body>
-                </soap:Envelope>
-      responses:
-        '200':
-          description: Respuesta SOAP proveedores telefónicos exitosa
-          content:
-            text/xml:
-              schema:
-                type: string
-                example: |
-                  <?xml version="1.0" encoding="utf-8"?>
-                  <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-                    <soap:Body>
-                      <fn_consulta_proveedor_telfResponse xmlns="http://mdmq.quito.gob.ec/">
-                        <fn_consulta_proveedor_telfResult>int</fn_consulta_proveedor_telfResult>
-                        <strMensaje>string</strMensaje>
-                        <lstPerProveedorTelf>
-                          <clsPerProveedorTelf>
-                            <PRV_ID>string</PRV_ID>
-                            <PRV_DESCRIPCION>string</PRV_DESCRIPCION>
-                          </clsPerProveedorTelf>
-                        </lstPerProveedorTelf>
-                      </fn_consulta_proveedor_telfResponse>
-                    </soap:Body>
-                  </soap:Envelope>
+  version: 1.0.0
+spec:
+  type: soap
+  lifecycle: production
+  owner: equipo-qa
+  definition: |
+    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+                 xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://mdmq.quito.gob.ec/"
+                 xmlns:tns="http://mdmq.quito.gob.ec/">
+
+      <types>
+        <xs:schema targetNamespace="http://mdmq.quito.gob.ec/">
+          <xs:element name="fn_consulta_buscarPersonaCompleto">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="strIdentificacion" type="xs:string" />
+                <xs:element name="strTipoIdentificacion" type="xs:string" />
+                <xs:element name="strAccion" type="xs:string" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          
+          <xs:element name="fn_consulta_proveedor_telf" type="xs:anyType" />
+          
+          <!-- Define response elements, persona and proveedor details here -->
+        </xs:schema>
+      </types>
+
+      <message name="fn_consulta_buscarPersonaCompletoRequest">
+        <part name="parameters" element="tns:fn_consulta_buscarPersonaCompleto" />
+      </message>
+      <message name="fn_consulta_buscarPersonaCompletoResponse">
+        <part name="parameters" element="tns:fn_consulta_buscarPersonaCompletoResponse" />
+      </message>
+
+      <message name="fn_consulta_proveedor_telfRequest" />
+      <message name="fn_consulta_proveedor_telfResponse">
+        <part name="parameters" element="tns:fn_consulta_proveedor_telfResponse" />
+      </message>
+
+      <portType name="PersonaSQLPortType">
+        <operation name="fn_consulta_buscarPersonaCompleto">
+          <input message="tns:fn_consulta_buscarPersonaCompletoRequest" />
+          <output message="tns:fn_consulta_buscarPersonaCompletoResponse" />
+        </operation>
+        <operation name="fn_consulta_proveedor_telf">
+          <input message="tns:fn_consulta_proveedor_telfRequest" />
+          <output message="tns:fn_consulta_proveedor_telfResponse" />
+        </operation>
+      </portType>
+
+      <binding name="PersonaSQLBinding" type="tns:PersonaSQLPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="fn_consulta_buscarPersonaCompleto">
+          <soap:operation soapAction="http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto" />
+          <input>
+            <soap:body use="literal" />
+          </input>
+          <output>
+            <soap:body use="literal" />
+          </output>
+        </operation>
+        <operation name="fn_consulta_proveedor_telf">
+          <soap:operation soapAction="http://mdmq.quito.gob.ec/fn_consulta_proveedor_telf" />
+          <input>
+            <soap:body use="literal" />
+          </input>
+          <output>
+            <soap:body use="literal" />
+          </output>
+        </operation>
+      </binding>
+
+      <service name="PersonaSQLService">
+        <port name="PersonaSQLPort" binding="tns:PersonaSQLBinding">
+          <soap:address location="https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx" />
+        </port>
+      </service>
+    </definitions>
+
