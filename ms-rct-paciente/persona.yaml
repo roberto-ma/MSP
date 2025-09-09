@@ -1,14 +1,17 @@
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
-  name: MDMQ Personas SOAP API
-  description: API SOAP para consultar personas y proveedores telefónicos en MDMQ Quito
-  version: 1.0.0
+  name: mdmq-personas-soap
+  description: Servicio SOAP para buscar persona completa en MDMQ Quito
+  owner: equipo-qa
+  tags:
+    - soap
+    - mdmq
 spec:
   type: soap
   lifecycle: production
-  owner: equipo-qa
   definition: |
+    <?xml version="1.0" encoding="utf-8"?>
     <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -26,10 +29,40 @@ spec:
               </xs:sequence>
             </xs:complexType>
           </xs:element>
-          
-          <xs:element name="fn_consulta_proveedor_telf" type="xs:anyType" />
-          
-          <!-- Define response elements, persona and proveedor details here -->
+          <xs:element name="fn_consulta_buscarPersonaCompletoResponse">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="fn_consulta_buscarPersonaCompletoResult" type="xs:int" />
+                <xs:element name="strMensaje" type="xs:string" />
+                <xs:element name="perPersona">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="PE_PERSONA_ID" type="xs:long" />
+                      <xs:element name="PE_DENOMINACION" type="xs:string" />
+                      <xs:element name="PE_NOMBRES" type="xs:string" />
+                      <xs:element name="PE_APELLIDOS" type="xs:string" />
+                      <xs:element name="PE_RAZON_SOCIAL" type="xs:string" />
+                      <xs:element name="PE_NUM_IDENTIFICACION" type="xs:string" />
+                      <xs:element name="PE_TIP_IDENTIFICACION" type="xs:string" />
+                      <xs:element name="PE_TIP_PERSONA" type="xs:string" />
+                      <xs:element name="PE_MAIL" type="xs:string" />
+                      <xs:element name="PE_ESTADO_TRAN" type="xs:string" />
+                      <xs:element name="PE_ESTADO_DESC" type="xs:string" />
+                      <xs:element name="PE_FECHA_NACIMIENTO" type="xs:dateTime" />
+                      <xs:element name="PE_FECHA_FALLECIMIENTO" type="xs:dateTime" minOccurs="0" />
+                      <xs:element name="PE_FECH_INSC_FALLECIMIENTO" type="xs:dateTime" minOccurs="0" />
+                      <xs:element name="PE_ESTADO_CIVIL" type="xs:string" />
+                      <xs:element name="PE_CEDULA_CONYUGE" type="xs:string" />
+                      <xs:element name="PE_NOMBRE_CONYUGE" type="xs:string" />
+                      <xs:element name="PE_NACIONALIDAD" type="xs:string" />
+                      <xs:element name="PE_CELULAR" type="xs:string" />
+                      <xs:element name="PE_TELEFONO" type="xs:string" />
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
         </xs:schema>
       </types>
 
@@ -40,19 +73,10 @@ spec:
         <part name="parameters" element="tns:fn_consulta_buscarPersonaCompletoResponse" />
       </message>
 
-      <message name="fn_consulta_proveedor_telfRequest" />
-      <message name="fn_consulta_proveedor_telfResponse">
-        <part name="parameters" element="tns:fn_consulta_proveedor_telfResponse" />
-      </message>
-
       <portType name="PersonaSQLPortType">
         <operation name="fn_consulta_buscarPersonaCompleto">
           <input message="tns:fn_consulta_buscarPersonaCompletoRequest" />
           <output message="tns:fn_consulta_buscarPersonaCompletoResponse" />
-        </operation>
-        <operation name="fn_consulta_proveedor_telf">
-          <input message="tns:fn_consulta_proveedor_telfRequest" />
-          <output message="tns:fn_consulta_proveedor_telfResponse" />
         </operation>
       </portType>
 
@@ -67,20 +91,6 @@ spec:
             <soap:body use="literal" />
           </output>
         </operation>
-        <operation name="fn_consulta_proveedor_telf">
-          <soap:operation soapAction="http://mdmq.quito.gob.ec/fn_consulta_proveedor_telf" />
-          <input>
-            <soap:body use="literal" />
-          </input>
-          <output>
-            <soap:body use="literal" />
-          </output>
-        </operation>
       </binding>
 
-      <service name="PersonaSQLService">
-        <port name="PersonaSQLPort" binding="tns:PersonaSQLBinding">
-          <soap:address location="https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx" />
-        </port>
-      </service>
-    </definitions>
+      <service name="P
