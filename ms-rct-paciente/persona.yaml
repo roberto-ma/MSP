@@ -10,6 +10,7 @@ metadata:
 spec:
   type: soap
   lifecycle: production
+  owner: equipo-qa            # <-- Agregado aquí, obligatorio
   definition: |
     <?xml version="1.0" encoding="utf-8"?>
     <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
@@ -80,17 +81,4 @@ spec:
         </operation>
       </portType>
 
-      <binding name="PersonaSQLBinding" type="tns:PersonaSQLPortType">
-        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
-        <operation name="fn_consulta_buscarPersonaCompleto">
-          <soap:operation soapAction="http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto" />
-          <input>
-            <soap:body use="literal" />
-          </input>
-          <output>
-            <soap:body use="literal" />
-          </output>
-        </operation>
-      </binding>
-
-      <service name="P
+      <bi
