@@ -109,17 +109,6 @@ spec:
     </soap:Envelope>
     ```
 
----
-
-### Opcional: Agrega emojis, negritas, y secciones para hacerlo más amigable.
-
----
-
-### ¿Quieres te arme también un pequeño README.md para que tu equipo pueda copiar/pegar y entender rápido?
-
----
-
-**En resumen:**  
 No hay forma de hacer un Swagger UI para SOAP “automágicamente” en Backstage, pero con buena estructura Markdown + YAML se ve bastante profesional y fácil de leer.
 
 ¿Quieres que te ayude a darle un toque extra con tablas o un diseño más elaborado?
