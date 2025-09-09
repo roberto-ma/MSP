@@ -1,26 +1,25 @@
 openapi: 3.0.3
 info:
-  title: API SOAP Personas - Municipio de Quito
+  title: MDMQ Personas SOAP API
   version: 1.0.0
+  description: API SOAP para consultar personas y proveedores telefónicos en MDMQ Quito
 servers:
   - url: https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx
 paths:
   /:
     post:
-      summary: Buscar Persona Completo
-      description: Consulta de persona completa usando identificación y tipo.
-      operationId: fn_consulta_buscarPersonaCompleto
+      summary: fn_consulta_buscarPersonaCompleto
+      operationId: buscarPersonaCompleto
       requestBody:
+        description: SOAP request para buscar persona completa
         required: true
         content:
           text/xml:
             schema:
               type: string
-              example: |-
+              example: |
                 <?xml version="1.0" encoding="utf-8"?>
-                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                               xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
                   <soap:Header>
                     <Cabecera xmlns="http://mdmq.quito.gob.ec/">
                       <UserName>string</UserName>
@@ -37,63 +36,40 @@ paths:
                 </soap:Envelope>
       responses:
         '200':
-          description: Respuesta exitosa con datos de persona completa
+          description: Respuesta SOAP exitosa
           content:
             text/xml:
               schema:
                 type: string
-                example: |-
+                example: |
                   <?xml version="1.0" encoding="utf-8"?>
-                  <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                                 xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+                  <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
                     <soap:Body>
                       <fn_consulta_buscarPersonaCompletoResponse xmlns="http://mdmq.quito.gob.ec/">
-                        <fn_consulta_buscarPersonaCompletoResult>1</fn_consulta_buscarPersonaCompletoResult>
-                        <strMensaje>Consulta exitosa</strMensaje>
+                        <fn_consulta_buscarPersonaCompletoResult>int</fn_consulta_buscarPersonaCompletoResult>
+                        <strMensaje>string</strMensaje>
                         <perPersona>
-                          <PE_PERSONA_ID>123456</PE_PERSONA_ID>
-                          <PE_DENOMINACION>Sr.</PE_DENOMINACION>
-                          <PE_NOMBRES>Juan Carlos</PE_NOMBRES>
-                          <PE_APELLIDOS>Perez Gonzalez</PE_APELLIDOS>
-                          <PE_RAZON_SOCIAL>Juan Carlos Perez Gonzalez</PE_RAZON_SOCIAL>
-                          <PE_NUM_IDENTIFICACION>0603005299</PE_NUM_IDENTIFICACION>
-                          <PE_TIP_IDENTIFICACION>C</PE_TIP_IDENTIFICACION>
-                          <PE_TIP_PERSONA>NATURAL</PE_TIP_PERSONA>
-                          <PE_MAIL>juan.perez@example.com</PE_MAIL>
-                          <PE_ESTADO_TRAN>ACT</PE_ESTADO_TRAN>
-                          <PE_ESTADO_DESC>Activo</PE_ESTADO_DESC>
-                          <PE_FECHA_NACIMIENTO>1980-05-10T00:00:00</PE_FECHA_NACIMIENTO>
-                          <PE_FECHA_FALLECIMIENTO xsi:nil="true" />
-                          <PE_FECH_INSC_FALLECIMIENTO xsi:nil="true" />
-                          <PE_ESTADO_CIVIL>CASADO</PE_ESTADO_CIVIL>
-                          <PE_CEDULA_CONYUGE>0102030405</PE_CEDULA_CONYUGE>
-                          <PE_NOMBRE_CONYUGE>Maria Lopez</PE_NOMBRE_CONYUGE>
-                          <PE_NACIONALIDAD>Ecuatoriana</PE_NACIONALIDAD>
-                          <PE_CELULAR>0999999999</PE_CELULAR>
-                          <PE_TELEFONO>022345678</PE_TELEFONO>
+                          <PE_PERSONA_ID>long</PE_PERSONA_ID>
+                          <PE_DENOMINACION>string</PE_DENOMINACION>
+                          <!-- Más campos -->
                         </perPersona>
                       </fn_consulta_buscarPersonaCompletoResponse>
                     </soap:Body>
                   </soap:Envelope>
-      x-soap-action: "http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto"
-
   /proveedor_telf:
     post:
-      summary: Consulta Proveedor Teléfono
-      description: Obtiene lista de proveedores de teléfono.
-      operationId: fn_consulta_proveedor_telf
+      summary: fn_consulta_proveedor_telf
+      operationId: proveedorTelf
       requestBody:
+        description: SOAP request para consultar proveedores telefónicos
         required: true
         content:
           text/xml:
             schema:
               type: string
-              example: |-
+              example: |
                 <?xml version="1.0" encoding="utf-8"?>
-                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                               xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
                   <soap:Header>
                     <Cabecera xmlns="http://mdmq.quito.gob.ec/">
                       <UserName>string</UserName>
@@ -106,31 +82,24 @@ paths:
                 </soap:Envelope>
       responses:
         '200':
-          description: Respuesta exitosa con lista de proveedores de teléfono
+          description: Respuesta SOAP proveedores telefónicos exitosa
           content:
             text/xml:
               schema:
                 type: string
-                example: |-
+                example: |
                   <?xml version="1.0" encoding="utf-8"?>
-                  <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                                 xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+                  <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
                     <soap:Body>
                       <fn_consulta_proveedor_telfResponse xmlns="http://mdmq.quito.gob.ec/">
-                        <fn_consulta_proveedor_telfResult>1</fn_consulta_proveedor_telfResult>
-                        <strMensaje>Consulta exitosa</strMensaje>
+                        <fn_consulta_proveedor_telfResult>int</fn_consulta_proveedor_telfResult>
+                        <strMensaje>string</strMensaje>
                         <lstPerProveedorTelf>
                           <clsPerProveedorTelf>
-                            <PRV_ID>123</PRV_ID>
-                            <PRV_DESCRIPCION>Proveedor A</PRV_DESCRIPCION>
-                          </clsPerProveedorTelf>
-                          <clsPerProveedorTelf>
-                            <PRV_ID>456</PRV_ID>
-                            <PRV_DESCRIPCION>Proveedor B</PRV_DESCRIPCION>
+                            <PRV_ID>string</PRV_ID>
+                            <PRV_DESCRIPCION>string</PRV_DESCRIPCION>
                           </clsPerProveedorTelf>
                         </lstPerProveedorTelf>
                       </fn_consulta_proveedor_telfResponse>
                     </soap:Body>
                   </soap:Envelope>
-      x-soap-action: "http://mdmq.quito.gob.ec/fn_consulta_proveedor_telf"
