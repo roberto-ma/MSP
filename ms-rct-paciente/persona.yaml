@@ -1,10 +1,125 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
 metadata:
   name: soap-personas
-  description: Servicio SOAP para consulta de personas en MDMQ
+  description: >
+    Servicio SOAP para consulta de personas en MDMQ.  
+    Documentación visual con ejemplos y detalles para facilitar su uso.
+  tags:
+    - soap
+    - personas
   links:
     - url: https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?wsdl
-      title: Archivo WSDL oficial
+      title: 📄 WSDL Oficial
       icon: docs
-    - url: https://www.wsdlviewer.com/?wsdl=https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?wsdl
-      title: Visor WSDL Online
-      icon: docs
+spec:
+  type: soap
+  lifecycle: production
+  owner: roberto.maldonado@quito.gob.ec
+  system: integrasys
+  definition: |
+    ## 🚀 Endpoint SOAP
+
+    - **URL:** `https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx`
+    - **SOAPAction:** `"http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto"`
+    - **WSDL:** [Ver WSDL oficial](https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?wsdl)
+
+    ---
+
+    ## 🔐 Autenticación SOAP (Header)
+
+    Se debe incluir en el header del SOAP los siguientes elementos para autenticación:
+
+    ```xml
+    <soap:Header>
+      <Cabecera xmlns="http://mdmq.quito.gob.ec/">
+        <UserName>usuario</UserName>
+        <Password>clave</Password>
+      </Cabecera>
+    </soap:Header>
+    ```
+
+    ---
+
+    ## 📤 Ejemplo de Request SOAP
+
+    ```xml
+    <?xml version="1.0" encoding="utf-8"?>
+    <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                   xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+      <soap:Header>
+        <Cabecera xmlns="http://mdmq.quito.gob.ec/">
+          <UserName>usuario</UserName>
+          <Password>clave</Password>
+        </Cabecera>
+      </soap:Header>
+      <soap:Body>
+        <fn_consulta_buscarPersonaCompleto xmlns="http://mdmq.quito.gob.ec/">
+          <strIdentificacion>0603005299</strIdentificacion>
+          <strTipoIdentificacion>C</strTipoIdentificacion>
+          <strAccion>CONSULTA</strAccion>
+        </fn_consulta_buscarPersonaCompleto>
+      </soap:Body>
+    </soap:Envelope>
+    ```
+
+    ---
+
+    ## 📥 Ejemplo de Response SOAP
+
+    ```http
+    HTTP/1.1 200 OK
+    Content-Type: text/xml; charset=utf-8
+    ```
+
+    ```xml
+    <?xml version="1.0" encoding="utf-8"?>
+    <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                   xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+      <soap:Body>
+        <fn_consulta_buscarPersonaCompletoResponse xmlns="http://mdmq.quito.gob.ec/">
+          <fn_consulta_buscarPersonaCompletoResult>1</fn_consulta_buscarPersonaCompletoResult>
+          <strMensaje>Consulta exitosa</strMensaje>
+          <perPersona>
+            <PE_PERSONA_ID>123456</PE_PERSONA_ID>
+            <PE_DENOMINACION>Sr.</PE_DENOMINACION>
+            <PE_NOMBRES>Juan Carlos</PE_NOMBRES>
+            <PE_APELLIDOS>Perez Gonzalez</PE_APELLIDOS>
+            <PE_RAZON_SOCIAL>Juan Carlos Perez Gonzalez</PE_RAZON_SOCIAL>
+            <PE_NUM_IDENTIFICACION>0603005299</PE_NUM_IDENTIFICACION>
+            <PE_TIP_IDENTIFICACION>C</PE_TIP_IDENTIFICACION>
+            <PE_TIP_PERSONA>NATURAL</PE_TIP_PERSONA>
+            <PE_MAIL>juan.perez@example.com</PE_MAIL>
+            <PE_ESTADO_TRAN>ACT</PE_ESTADO_TRAN>
+            <PE_ESTADO_DESC>Activo</PE_ESTADO_DESC>
+            <PE_FECHA_NACIMIENTO>1980-05-10T00:00:00</PE_FECHA_NACIMIENTO>
+            <PE_FECHA_FALLECIMIENTO xsi:nil="true" />
+            <PE_FECH_INSC_FALLECIMIENTO xsi:nil="true" />
+            <PE_ESTADO_CIVIL>CASADO</PE_ESTADO_CIVIL>
+            <PE_CEDULA_CONYUGE>0102030405</PE_CEDULA_CONYUGE>
+            <PE_NOMBRE_CONYUGE>Maria Lopez</PE_NOMBRE_CONYUGE>
+            <PE_NACIONALIDAD>Ecuatoriana</PE_NACIONALIDAD>
+            <PE_CELULAR>0999999999</PE_CELULAR>
+            <PE_TELEFONO>022345678</PE_TELEFONO>
+          </perPersona>
+        </fn_consulta_buscarPersonaCompletoResponse>
+      </soap:Body>
+    </soap:Envelope>
+    ```
+
+---
+
+### Opcional: Agrega emojis, negritas, y secciones para hacerlo más amigable.
+
+---
+
+### ¿Quieres te arme también un pequeño README.md para que tu equipo pueda copiar/pegar y entender rápido?
+
+---
+
+**En resumen:**  
+No hay forma de hacer un Swagger UI para SOAP “automágicamente” en Backstage, pero con buena estructura Markdown + YAML se ve bastante profesional y fácil de leer.
+
+¿Quieres que te ayude a darle un toque extra con tablas o un diseño más elaborado?
