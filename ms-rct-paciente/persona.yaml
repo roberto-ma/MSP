@@ -1,1 +1,42 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: integrasys-soap-personas
+  description: Servicio SOAP para consulta de personas en MDMQ
+  tags:
+    - soap
+    - personas
+    - mdmq
+  links:
+    - url: https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?wsdl
+      title: WSDL
+      icon: docs
+spec:
+  type: soap
+  lifecycle: production
+  owner: roberto.maldonado@quito.gob.ec
+  system: integrasys
+  definition: |
+    endpoint: https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx
+    soapAction: "http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto"
+    wsdl: https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?wsdl
+    requestExample: |
+      <?xml version="1.0" encoding="utf-8"?>
+      <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                     xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Header>
+          <Cabecera xmlns="http://mdmq.quito.gob.ec/">
+            <UserName>usuario</UserName>
+            <Password>clave</Password>
+          </Cabecera>
+        </soap:Header>
+        <soap:Body>
+          <fn_consulta_buscarPersonaCompleto xmlns="http://mdmq.quito.gob.ec/">
+            <strIdentificacion>0603005299</strIdentificacion>
+            <strTipoIdentificacion>C</strTipoIdentificacion>
+            <strAccion>CONSULTA</strAccion>
+          </fn_consulta_buscarPersonaCompleto>
+        </soap:Body>
+      </soap:Envelope>
 
