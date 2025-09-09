@@ -17,7 +17,7 @@ spec:
   type: soap
   lifecycle: production
   owner: roberto.maldonado@quito.gob.ec
-  system: integrasys
+  system: ServicePersonas
   definition: |
     # SOAP Personas - API Documentation
 
