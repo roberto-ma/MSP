@@ -11,13 +11,12 @@ metadata:
       title: WSDL
       icon: docs
 spec:
-  type: soap
+  type: other
   lifecycle: production
   owner: roberto.maldonado@quito.gob.ec
   system: integrasys
-  definition: >
+  definition: |
     ## Endpoint SOAP
-
     **Endpoint**: `https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx`  
     **SOAPAction**: `"http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto"`  
     **WSDL**: [Ver WSDL](https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?wsdl)
@@ -105,5 +104,16 @@ spec:
     </soap:Envelope>
     ```
 
+    ---
 
- 
+    ### ⚙️ ¿Cómo probar este servicio SOAP?
+
+    Puedes usar herramientas especializadas para servicios SOAP como:
+
+    - **[SoapUI](https://www.soapui.org/):** Importa el WSDL desde [aquí](https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?wsdl), configura la autenticación en el header SOAP y realiza llamadas con los ejemplos proporcionados.
+
+    - **[Postman](https://www.postman.com/):** Crea una petición POST, pega el XML de request en el cuerpo, configura el header `SOAPAction` con el valor `"http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto"` y el header `Content-Type` a `text/xml; charset=utf-8`.
+
+    ---
+
+    Nota: Debido a que SOAP es un protocolo diferente a REST, este servicio no tiene interfaz Swagger UI para pruebas interactivas nativas en Backstage.
