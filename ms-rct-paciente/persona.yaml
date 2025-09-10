@@ -1,140 +1,80 @@
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
-  name: persona-sql-api
-  description: API SOAP que consulta y devuelve información sobre personas a partir de su identificación.
+  name: mdmq-personas-soap-api
+  title: "API SOAP de Consulta de Personas - MDMQ"
+  description: |
+    Servicio web SOAP del Municipio del Distrito Metropolitano de Quito (MDMQ) 
+    para la consulta completa de información de personas registradas en el sistema.
+    
+    Este servicio permite obtener datos detallados de personas físicas y jurídicas
+    mediante su número de identificación, incluyendo información personal, 
+    de contacto y estado civil.
   tags:
     - soap
-    - consulta
-    - persona
+    - gobierno
+    - mdmq
     - quito
+    - personas
+    - identificacion
+    - consultas
+    - registro-civil
+  annotations:
+    backstage.io/source-location: url:https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx
+    backstage.io/techdocs-ref: dir:.
+  links:
+    - url: https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx
+      title: Endpoint WSDL
+      icon: web
+    - url: https://www.quito.gob.ec
+      title: Portal Oficial MDMQ
+      icon: web
 spec:
   type: soap
   lifecycle: production
-  owner: equipo-de-soporte
+  owner: municipio-quito
+  system: sistema-personas-mdmq
   definition: |
-    <?xml version="1.0" encoding="utf-8"?>
-    <wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                      xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-                      xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
-                      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                      targetNamespace="http://mdmq.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx">
+    # API SOAP - Consulta de Personas MDMQ
     
-      <!-- Definición de los tipos -->
-      <wsdl:types>
-        <xsd:schema targetNamespace="http://mdmq.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx">
-          <xsd:element name="fn_consulta_buscarPersonaCompleto">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="strIdentificacion" type="xsd:string"/>
-                <xsd:element name="strTipoIdentificacion" type="xsd:string"/>
-                <xsd:element name="strAccion" type="xsd:string"/>
-              </xsd:sequence>
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="fn_consulta_buscarPersonaCompletoResponse">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="fn_consulta_buscarPersonaCompletoResult" type="xsd:int"/>
-                <xsd:element name="strMensaje" type="xsd:string"/>
-                <xsd:element name="perPersona">
-                  <xsd:complexType>
-                    <xsd:sequence>
-                      <xsd:element name="PE_PERSONA_ID" type="xsd:long"/>
-                      <xsd:element name="PE_DENOMINACION" type="xsd:string"/>
-                      <xsd:element name="PE_NOMBRES" type="xsd:string"/>
-                      <xsd:element name="PE_APELLIDOS" type="xsd:string"/>
-                      <xsd:element name="PE_RAZON_SOCIAL" type="xsd:string"/>
-                      <xsd:element name="PE_NUM_IDENTIFICACION" type="xsd:string"/>
-                      <xsd:element name="PE_TIP_IDENTIFICACION" type="xsd:string"/>
-                      <xsd:element name="PE_TIP_PERSONA" type="xsd:string"/>
-                      <xsd:element name="PE_MAIL" type="xsd:string"/>
-                      <xsd:element name="PE_ESTADO_TRAN" type="xsd:string"/>
-                      <xsd:element name="PE_ESTADO_DESC" type="xsd:string"/>
-                      <xsd:element name="PE_FECHA_NACIMIENTO" type="xsd:dateTime"/>
-                      <xsd:element name="PE_FECHA_FALLECIMIENTO" type="xsd:dateTime"/>
-                      <xsd:element name="PE_FECH_INSC_FALLECIMIENTO" type="xsd:dateTime"/>
-                      <xsd:element name="PE_ESTADO_CIVIL" type="xsd:string"/>
-                      <xsd:element name="PE_CEDULA_CONYUGE" type="xsd:string"/>
-                      <xsd:element name="PE_NOMBRE_CONYUGE" type="xsd:string"/>
-                      <xsd:element name="PE_NACIONALIDAD" type="xsd:string"/>
-                      <xsd:element name="PE_CELULAR" type="xsd:string"/>
-                      <xsd:element name="PE_TELEFONO" type="xsd:string"/>
-                    </xsd:sequence>
-                  </xsd:complexType>
-                </xsd:element>
-              </xsd:sequence>
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:schema>
-      </wsdl:types>
-
-      <!-- Definición de los mensajes -->
-      <wsdl:message name="fn_consulta_buscarPersonaCompletoRequest">
-        <wsdl:part name="parameters" element="tns:fn_consulta_buscarPersonaCompleto"/>
-      </wsdl:message>
-      
-      <wsdl:message name="fn_consulta_buscarPersonaCompletoResponse">
-        <wsdl:part name="parameters" element="tns:fn_consulta_buscarPersonaCompletoResponse"/>
-      </wsdl:message>
-      
-      <!-- Definición del puerto y operación -->
-      <wsdl:portType name="PersonaSQLService">
-        <wsdl:operation name="fn_consulta_buscarPersonaCompleto">
-          <wsdl:input message="tns:fn_consulta_buscarPersonaCompletoRequest"/>
-          <wsdl:output message="tns:fn_consulta_buscarPersonaCompletoResponse"/>
-        </wsdl:operation>
-      </wsdl:portType>
-
-      <!-- Definición del binding SOAP -->
-      <wsdl:binding name="PersonaSQLBinding" type="tns:PersonaSQLService">
-        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <wsdl:operation name="fn_consulta_buscarPersonaCompleto">
-          <soap:operation soapAction="http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto"/>
-          <wsdl:input>
-            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://mdmq.quito.gob.ec/"/>
-          </wsdl:input>
-          <wsdl:output>
-            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://mdmq.quito.gob.ec/"/>
-          </wsdl:output>
-        </wsdl:operation>
-      </wsdl:binding>
-
-      <!-- Definición del servicio -->
-      <wsdl:service name="PersonaSQLService">
-        <wsdl:port name="PersonaSQLPort" binding="tns:PersonaSQLBinding">
-          <soap:address location="http://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx"/>
-        </wsdl:port>
-      </wsdl:service>
-    </wsdl:definitions>
-  routes:
-    - url: '/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx'
-      method: POST
-      description: Endpoint para realizar consultas de personas usando SOAP.
-  authentication:
-    required: true
-    description: Autenticación básica con `UserName` y `Password` en el encabezado.
-  endpoints:
-    - name: fn_consulta_buscarPersonaCompleto
-      description: Consulta completa de una persona por su identificación.
-      method: POST
-      url: '/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx'
-      request:
-        contentType: text/xml
-        body: |
-          <?xml version="1.0" encoding="utf-8"?>
-          <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-            <soap:Header>
-              <Cabecera xmlns="http://mdmq.quito.gob.ec/">
-                <UserName>{{username}}</UserName>
-                <Password>{{password}}</Password>
-              </Cabecera>
-            </soap:Header>
-            <soap:Body>
-              <fn_consulta_buscarPersonaCompleto xmlns="http://mdmq.quito.gob.ec/">
-                <strIdentificacion>{{strIdentificacion}}</strIdentificacion>
-                <strTipoIdentificacion>{{strTipoIdentificacion}}</strTipoIdentificacion>
-                <strAccion>{{strAccion}}</strAccion>
-              </fn_consulta_buscarPersonaCompleto>
-            </soap:Body>
-          </
+    ## Información General
+    
+    **Endpoint**: https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx
+    
+    **Protocolo**: SOAP 1.1/1.2
+    
+    **Namespace**: http://mdmq.quito.gob.ec/
+    
+    ## Autenticación
+    
+    El servicio requiere autenticación mediante credenciales en el header SOAP:
+    
+    ```xml
+    <soap:Header>
+      <Cabecera xmlns="http://mdmq.quito.gob.ec/">
+        <UserName>string</UserName>
+        <Password>string</Password>
+      </Cabecera>
+    </soap:Header>
+    ```
+    
+    ## Operaciones Disponibles
+    
+    ### fn_consulta_buscarPersonaCompleto
+    
+    **Descripción**: Busca y retorna información completa de una persona registrada en el sistema.
+    
+    **Método**: POST
+    
+    **Content-Type**: text/xml; charset=utf-8
+    
+    **SOAPAction**: "http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto"
+    
+    #### Parámetros de Entrada
+    
+    | Parámetro | Tipo | Descripción | Requerido |
+    |-----------|------|-------------|-----------|
+    | `strIdentificacion` | string | Número de identificación de la persona | ✓ |
+    | `strTipoIdentificacion` | string | Tipo de identificación (CI, RUC, PAS, etc.) | ✓ |
+    | `strAccion` | string | Acción a realizar en la consulta | ✓ |
+    
