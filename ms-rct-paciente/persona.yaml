@@ -2,7 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
   name: persona-sql-api
-  description: API que consulta y devuelve información sobre personas a partir de su identificación.
+  description: API SOAP que consulta y devuelve información sobre personas a partir de su identificación.
   tags:
     - soap
     - consulta
@@ -12,7 +12,9 @@ spec:
   type: soap
   lifecycle: production
   owner: equipo-de-soporte
-  definition: 'http://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?WSDL'
+  definition: 
+    href: 'http://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?WSDL'
+    type: wsdl
   routes:
     - url: '/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx'
       method: POST
