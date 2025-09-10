@@ -1,14 +1,22 @@
 apiVersion: backstage.io/v1alpha1
-kind: System
+kind: API
 metadata:
-  name: sistema-personas-mdmq
-  title: "Sistema de Servicios Web MDMQ"
-  description: "Sistema integral de servicios web del Municipio del Distrito Metropolitano de Quito"
+  name: mdmq-personas-soap-api
+  title: "API SOAP - Consulta de Personas MDMQ"
+  description: "Servicio web SOAP para consulta de personas del MDMQ"
   tags:
-    - mdmq
-    - gobierno
     - soap
+    - mdmq
+    - personas
 spec:
-  type: service
+  type: soap
   lifecycle: production
-  owner: user:roberto-ma
+  owner: user:guest
+  definition: |
+    # API SOAP - Consulta de Personas MDMQ
+    
+    Servicio para consultar información de personas registradas en el MDMQ.
+    
+    **Endpoint**: https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx
+    
+    **SOAPAction**: "http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto"
