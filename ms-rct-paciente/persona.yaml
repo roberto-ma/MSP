@@ -3,14 +3,13 @@ kind: API
 metadata:
   name: mdmq-personas-soap
   description: Servicio SOAP para buscar persona completa en MDMQ Quito
-  owner: equipo-qa
+  owner: equipo-qa               # <-- Owner aquí en metadata
   tags:
     - soap
     - mdmq
 spec:
   type: soap
   lifecycle: production
-  owner: equipo-qa            # <-- Agregado aquí, obligatorio
   definition: |
     <?xml version="1.0" encoding="utf-8"?>
     <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
@@ -81,4 +80,22 @@ spec:
         </operation>
       </portType>
 
-      <bi
+      <binding name="PersonaSQLBinding" type="tns:PersonaSQLPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="fn_consulta_buscarPersonaCompleto">
+          <soap:operation soapAction="http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto" />
+          <input>
+            <soap:body use="literal" />
+          </input>
+          <output>
+            <soap:body use="literal" />
+          </output>
+        </operation>
+      </binding>
+
+      <service name="PersonaSQLService">
+        <port name="PersonaSQLPort" binding="tns:PersonaSQLBinding">
+          <soap:address location="https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx" />
+        </port>
+      </service>
+    </definitions>
