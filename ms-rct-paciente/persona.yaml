@@ -32,7 +32,7 @@ metadata:
 spec:
   type: soap
   lifecycle: production
-  owner: grupo-msp
+  owner: personas
   definition: |
     # API SOAP - Consulta de Personas MDMQ
     
