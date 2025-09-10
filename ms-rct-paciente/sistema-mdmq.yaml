@@ -3,37 +3,12 @@ kind: System
 metadata:
   name: sistema-personas-mdmq
   title: "Sistema de Servicios Web MDMQ"
-  description: |
-    Sistema integral de servicios web del Municipio del Distrito Metropolitano de Quito
-    que proporciona acceso a información de personas, proveedores y servicios municipales
-    a través de APIs SOAP.
-    
-    Este sistema incluye múltiples servicios web para consultas de:
-    - Información completa de personas (naturales y jurídicas)
-    - Catálogo de proveedores de servicios de telefonía
-    - Otros servicios municipales relacionados
+  description: "Sistema integral de servicios web del Municipio del Distrito Metropolitano de Quito"
   tags:
     - mdmq
     - gobierno
     - soap
-    - sistema-municipal
-    - quito
-    - servicios-publicos
-  annotations:
-    backstage.io/source-location: url:https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx
-  links:
-    - url: https://www.quito.gob.ec
-      title: Portal Oficial MDMQ
-      icon: web
-    - url: https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx
-      title: Endpoint Principal
-      icon: web
-  relations:
-    - type: hasPart
-      targetRef: api:default/mdmq-personas-soap-api
-    - type: hasPart
-      targetRef: api:default/mdmq-proveedores-telf-soap-api
 spec:
   type: service
   lifecycle: production
-  owner: grupo-msp
+  owner: user:roberto-ma
