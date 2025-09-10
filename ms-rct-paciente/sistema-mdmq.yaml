@@ -1,3 +1,4 @@
+# Definición del sistema
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
@@ -37,3 +38,31 @@ spec:
       targetRef: api:default/mdmq-personas-soap-api
     - type: hasPart
       targetRef: api:default/mdmq-proveedores-telf-soap-api
+---
+
+# Definición de la API mdmq-personas-soap-api
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: mdmq-personas-soap-api
+  description: API SOAP para obtener información de personas
+spec:
+  type: soap
+  lifecycle: production
+  owner: grupo-msp
+  system: sistema-personas-mdmq
+  target: https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx
+---
+
+# Definición de la API mdmq-proveedores-telf-soap-api
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: mdmq-proveedores-telf-soap-api
+  description: API SOAP para obtener información de proveedores de telefonía
+spec:
+  type: soap
+  lifecycle: production
+  owner: grupo-msp
+  system: sistema-personas-mdmq
+  target: https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/ProveedorTelfSQL.asmx
