@@ -32,8 +32,7 @@ metadata:
 spec:
   type: soap
   lifecycle: production
-  owner: municipio-quito
-  system: sistema-personas-mdmq
+  owner: grupo-msp
   definition: |
     # API SOAP - Consulta de Personas MDMQ
     
