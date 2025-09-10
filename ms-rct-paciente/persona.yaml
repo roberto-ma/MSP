@@ -12,7 +12,101 @@ spec:
   type: soap
   lifecycle: production
   owner: equipo-de-soporte
-  definition: 'http://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?WSDL'
+  definition: |
+    <?xml version="1.0" encoding="utf-8"?>
+    <wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                      xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                      xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                      targetNamespace="http://mdmq.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx">
+    
+      <!-- Definición de los tipos -->
+      <wsdl:types>
+        <xsd:schema targetNamespace="http://mdmq.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx">
+          <xsd:element name="fn_consulta_buscarPersonaCompleto">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="strIdentificacion" type="xsd:string"/>
+                <xsd:element name="strTipoIdentificacion" type="xsd:string"/>
+                <xsd:element name="strAccion" type="xsd:string"/>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="fn_consulta_buscarPersonaCompletoResponse">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="fn_consulta_buscarPersonaCompletoResult" type="xsd:int"/>
+                <xsd:element name="strMensaje" type="xsd:string"/>
+                <xsd:element name="perPersona">
+                  <xsd:complexType>
+                    <xsd:sequence>
+                      <xsd:element name="PE_PERSONA_ID" type="xsd:long"/>
+                      <xsd:element name="PE_DENOMINACION" type="xsd:string"/>
+                      <xsd:element name="PE_NOMBRES" type="xsd:string"/>
+                      <xsd:element name="PE_APELLIDOS" type="xsd:string"/>
+                      <xsd:element name="PE_RAZON_SOCIAL" type="xsd:string"/>
+                      <xsd:element name="PE_NUM_IDENTIFICACION" type="xsd:string"/>
+                      <xsd:element name="PE_TIP_IDENTIFICACION" type="xsd:string"/>
+                      <xsd:element name="PE_TIP_PERSONA" type="xsd:string"/>
+                      <xsd:element name="PE_MAIL" type="xsd:string"/>
+                      <xsd:element name="PE_ESTADO_TRAN" type="xsd:string"/>
+                      <xsd:element name="PE_ESTADO_DESC" type="xsd:string"/>
+                      <xsd:element name="PE_FECHA_NACIMIENTO" type="xsd:dateTime"/>
+                      <xsd:element name="PE_FECHA_FALLECIMIENTO" type="xsd:dateTime"/>
+                      <xsd:element name="PE_FECH_INSC_FALLECIMIENTO" type="xsd:dateTime"/>
+                      <xsd:element name="PE_ESTADO_CIVIL" type="xsd:string"/>
+                      <xsd:element name="PE_CEDULA_CONYUGE" type="xsd:string"/>
+                      <xsd:element name="PE_NOMBRE_CONYUGE" type="xsd:string"/>
+                      <xsd:element name="PE_NACIONALIDAD" type="xsd:string"/>
+                      <xsd:element name="PE_CELULAR" type="xsd:string"/>
+                      <xsd:element name="PE_TELEFONO" type="xsd:string"/>
+                    </xsd:sequence>
+                  </xsd:complexType>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:schema>
+      </wsdl:types>
+
+      <!-- Definición de los mensajes -->
+      <wsdl:message name="fn_consulta_buscarPersonaCompletoRequest">
+        <wsdl:part name="parameters" element="tns:fn_consulta_buscarPersonaCompleto"/>
+      </wsdl:message>
+      
+      <wsdl:message name="fn_consulta_buscarPersonaCompletoResponse">
+        <wsdl:part name="parameters" element="tns:fn_consulta_buscarPersonaCompletoResponse"/>
+      </wsdl:message>
+      
+      <!-- Definición del puerto y operación -->
+      <wsdl:portType name="PersonaSQLService">
+        <wsdl:operation name="fn_consulta_buscarPersonaCompleto">
+          <wsdl:input message="tns:fn_consulta_buscarPersonaCompletoRequest"/>
+          <wsdl:output message="tns:fn_consulta_buscarPersonaCompletoResponse"/>
+        </wsdl:operation>
+      </wsdl:portType>
+
+      <!-- Definición del binding SOAP -->
+      <wsdl:binding name="PersonaSQLBinding" type="tns:PersonaSQLService">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="fn_consulta_buscarPersonaCompleto">
+          <soap:operation soapAction="http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto"/>
+          <wsdl:input>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://mdmq.quito.gob.ec/"/>
+          </wsdl:input>
+          <wsdl:output>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://mdmq.quito.gob.ec/"/>
+          </wsdl:output>
+        </wsdl:operation>
+      </wsdl:binding>
+
+      <!-- Definición del servicio -->
+      <wsdl:service name="PersonaSQLService">
+        <wsdl:port name="PersonaSQLPort" binding="tns:PersonaSQLBinding">
+          <soap:address location="http://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx"/>
+        </wsdl:port>
+      </wsdl:service>
+    </wsdl:definitions>
   routes:
     - url: '/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx'
       method: POST
@@ -43,28 +137,4 @@ spec:
                 <strAccion>{{strAccion}}</strAccion>
               </fn_consulta_buscarPersonaCompleto>
             </soap:Body>
-          </soap:Envelope>
-      response:
-        contentType: text/xml
-        body: |
-          <?xml version="1.0" encoding="utf-8"?>
-          <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-            <soap:Body>
-              <fn_consulta_buscarPersonaCompletoResponse xmlns="http://mdmq.quito.gob.ec/">
-                <fn_consulta_buscarPersonaCompletoResult>int</fn_consulta_buscarPersonaCompletoResult>
-                <strMensaje>string</strMensaje>
-                <perPersona>
-                  <PE_PERSONA_ID>long</PE_PERSONA_ID>
-                  <PE_DENOMINACION>string</PE_DENOMINACION>
-                  <PE_NOMBRES>string</PE_NOMBRES>
-                  <PE_APELLIDOS>string</PE_APELLIDOS>
-                  <PE_RAZON_SOCIAL>string</PE_RAZON_SOCIAL>
-                  <PE_NUM_IDENTIFICACION>string</PE_NUM_IDENTIFICACION>
-                  <PE_TIP_IDENTIFICACION>string</PE_TIP_IDENTIFICACION>
-                  <PE_TIP_PERSONA>string</PE_TIP_PERSONA>
-                  <PE_MAIL>string</PE_MAIL>
-                  <PE_ESTADO_TRAN>string</PE_ESTADO_TRAN>
-                  <PE_ESTADO_DESC>string</PE_ESTADO_DESC>
-                  <PE_FECHA_NACIMIENTO>dateTime</PE_FECHA_NACIMIENTO>
-                  <PE_FECHA_FALLECIMIENTO>dateTime</PE_FECHA_FALLECIMIENTO>
-                  <PE_FECH_INSC_FALLECIMIENTO>dateTime</PE_FECH_INSC_FALLECIMIE
+          </
