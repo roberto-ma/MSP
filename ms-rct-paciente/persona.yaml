@@ -1,87 +1,83 @@
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
-  name: mdmq-personas-soap
-  description: Servicio SOAP para buscar persona completa en MDMQ Quito
+  name: persona-sql-api
+  description: API que consulta y devuelve información sobre personas a partir de su identificación.
   tags:
     - soap
-    - mdmq
+    - consulta
+    - persona
+    - quito
 spec:
   type: soap
   lifecycle: production
-  owner: equipo-qa               # <-- Owner aquí en spec
-  definition: |
-    <?xml version="1.0" encoding="utf-8"?>
-    <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-                 xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                 targetNamespace="http://mdmq.quito.gob.ec/"
-                 xmlns:tns="http://mdmq.quito.gob.ec/">
-
-      <types>
-        <xs:schema targetNamespace="http://mdmq.quito.gob.ec/">
-          <xs:element name="fn_consulta_buscarPersonaCompleto">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element name="strIdentificacion" type="xs:string" />
-                <xs:element name="strTipoIdentificacion" type="xs:string" />
-                <xs:element name="strAccion" type="xs:string" />
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-          <xs:element name="fn_consulta_buscarPersonaCompletoResponse">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element name="fn_consulta_buscarPersonaCompletoResult" type="xs:int" />
-                <xs:element name="strMensaje" type="xs:string" />
-                <xs:element name="perPersona">
-                  <xs:complexType>
-                    <xs:sequence>
-                      <xs:element name="PE_PERSONA_ID" type="xs:long" />
-                      <xs:element name="PE_DENOMINACION" type="xs:string" />
-                      <xs:element name="PE_NOMBRES" type="xs:string" />
-                      <xs:element name="PE_APELLIDOS" type="xs:string" />
-                      <xs:element name="PE_RAZON_SOCIAL" type="xs:string" />
-                      <xs:element name="PE_NUM_IDENTIFICACION" type="xs:string" />
-                      <xs:element name="PE_TIP_IDENTIFICACION" type="xs:string" />
-                      <xs:element name="PE_TIP_PERSONA" type="xs:string" />
-                      <xs:element name="PE_MAIL" type="xs:string" />
-                      <xs:element name="PE_ESTADO_TRAN" type="xs:string" />
-                      <xs:element name="PE_ESTADO_DESC" type="xs:string" />
-                      <xs:element name="PE_FECHA_NACIMIENTO" type="xs:dateTime" />
-                      <xs:element name="PE_FECHA_FALLECIMIENTO" type="xs:dateTime" minOccurs="0" />
-                      <xs:element name="PE_FECH_INSC_FALLECIMIENTO" type="xs:dateTime" minOccurs="0" />
-                      <xs:element name="PE_ESTADO_CIVIL" type="xs:string" />
-                      <xs:element name="PE_CEDULA_CONYUGE" type="xs:string" />
-                      <xs:element name="PE_NOMBRE_CONYUGE" type="xs:string" />
-                      <xs:element name="PE_NACIONALIDAD" type="xs:string" />
-                      <xs:element name="PE_CELULAR" type="xs:string" />
-                      <xs:element name="PE_TELEFONO" type="xs:string" />
-                    </xs:sequence>
-                  </xs:complexType>
-                </xs:element>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-        </xs:schema>
-      </types>
-
-      <message name="fn_consulta_buscarPersonaCompletoRequest">
-        <part name="parameters" element="tns:fn_consulta_buscarPersonaCompleto" />
-      </message>
-      <message name="fn_consulta_buscarPersonaCompletoResponse">
-        <part name="parameters" element="tns:fn_consulta_buscarPersonaCompletoResponse" />
-      </message>
-
-      <portType name="PersonaSQLPortType">
-        <operation name="fn_consulta_buscarPersonaCompleto">
-          <input message="tns:fn_consulta_buscarPersonaCompletoRequest" />
-          <output message="tns:fn_consulta_buscarPersonaCompletoResponse" />
-        </operation>
-      </portType>
-
-      <binding name="PersonaSQLBinding" type="tns:PersonaSQLPortType">
-        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
-        <operation name="fn_consulta_buscarPersonaCompleto">
-          <soap:operation soapAction="http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto" />
-          <inpu
+  owner: equipo-de-soporte
+  definition:
+    href: 'http://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?WSDL'
+  routes:
+    - url: '/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx'
+      method: POST
+      description: Endpoint para realizar consultas de personas usando SOAP.
+  authentication:
+    required: true
+    description: Autenticación básica con `UserName` y `Password` en el encabezado.
+  endpoints:
+    - name: fn_consulta_buscarPersonaCompleto
+      description: Consulta completa de una persona por su identificación.
+      method: POST
+      url: '/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx'
+      request:
+        contentType: text/xml
+        body:
+          xml: |
+            <?xml version="1.0" encoding="utf-8"?>
+            <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+              <soap:Header>
+                <Cabecera xmlns="http://mdmq.quito.gob.ec/">
+                  <UserName>{{username}}</UserName>
+                  <Password>{{password}}</Password>
+                </Cabecera>
+              </soap:Header>
+              <soap:Body>
+                <fn_consulta_buscarPersonaCompleto xmlns="http://mdmq.quito.gob.ec/">
+                  <strIdentificacion>{{strIdentificacion}}</strIdentificacion>
+                  <strTipoIdentificacion>{{strTipoIdentificacion}}</strTipoIdentificacion>
+                  <strAccion>{{strAccion}}</strAccion>
+                </fn_consulta_buscarPersonaCompleto>
+              </soap:Body>
+            </soap:Envelope>
+      response:
+        contentType: text/xml
+        body:
+          xml: |
+            <?xml version="1.0" encoding="utf-8"?>
+            <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+              <soap:Body>
+                <fn_consulta_buscarPersonaCompletoResponse xmlns="http://mdmq.quito.gob.ec/">
+                  <fn_consulta_buscarPersonaCompletoResult>int</fn_consulta_buscarPersonaCompletoResult>
+                  <strMensaje>string</strMensaje>
+                  <perPersona>
+                    <PE_PERSONA_ID>long</PE_PERSONA_ID>
+                    <PE_DENOMINACION>string</PE_DENOMINACION>
+                    <PE_NOMBRES>string</PE_NOMBRES>
+                    <PE_APELLIDOS>string</PE_APELLIDOS>
+                    <PE_RAZON_SOCIAL>string</PE_RAZON_SOCIAL>
+                    <PE_NUM_IDENTIFICACION>string</PE_NUM_IDENTIFICACION>
+                    <PE_TIP_IDENTIFICACION>string</PE_TIP_IDENTIFICACION>
+                    <PE_TIP_PERSONA>string</PE_TIP_PERSONA>
+                    <PE_MAIL>string</PE_MAIL>
+                    <PE_ESTADO_TRAN>string</PE_ESTADO_TRAN>
+                    <PE_ESTADO_DESC>string</PE_ESTADO_DESC>
+                    <PE_FECHA_NACIMIENTO>dateTime</PE_FECHA_NACIMIENTO>
+                    <PE_FECHA_FALLECIMIENTO>dateTime</PE_FECHA_FALLECIMIENTO>
+                    <PE_FECH_INSC_FALLECIMIENTO>dateTime</PE_FECH_INSC_FALLECIMIENTO>
+                    <PE_ESTADO_CIVIL>string</PE_ESTADO_CIVIL>
+                    <PE_CEDULA_CONYUGE>string</PE_CEDULA_CONYUGE>
+                    <PE_NOMBRE_CONYUGE>string</PE_NOMBRE_CONYUGE>
+                    <PE_NACIONALIDAD>string</PE_NACIONALIDAD>
+                    <PE_CELULAR>string</PE_CELULAR>
+                    <PE_TELEFONO>string</PE_TELEFONO>
+                  </perPersona>
+                </fn_consulta_buscarPersonaCompletoResponse>
+              </soap:Body>
+            </soap:Envelope>
