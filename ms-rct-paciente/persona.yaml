@@ -12,23 +12,7 @@ spec:
   type: soap
   lifecycle: production
   owner: equipo-de-soporte
-  definition: |
-    <?xml version="1.0" encoding="utf-8"?>
-    <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-      <soap:Header>
-        <Cabecera xmlns="http://mdmq.quito.gob.ec/">
-          <UserName>{{username}}</UserName>
-          <Password>{{password}}</Password>
-        </Cabecera>
-      </soap:Header>
-      <soap:Body>
-        <fn_consulta_buscarPersonaCompleto xmlns="http://mdmq.quito.gob.ec/">
-          <strIdentificacion>{{strIdentificacion}}</strIdentificacion>
-          <strTipoIdentificacion>{{strTipoIdentificacion}}</strTipoIdentificacion>
-          <strAccion>{{strAccion}}</strAccion>
-        </fn_consulta_buscarPersonaCompleto>
-      </soap:Body>
-    </soap:Envelope>
+  definition: 'http://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?WSDL'
   routes:
     - url: '/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx'
       method: POST
@@ -83,14 +67,4 @@ spec:
                   <PE_ESTADO_DESC>string</PE_ESTADO_DESC>
                   <PE_FECHA_NACIMIENTO>dateTime</PE_FECHA_NACIMIENTO>
                   <PE_FECHA_FALLECIMIENTO>dateTime</PE_FECHA_FALLECIMIENTO>
-                  <PE_FECH_INSC_FALLECIMIENTO>dateTime</PE_FECH_INSC_FALLECIMIENTO>
-                  <PE_ESTADO_CIVIL>string</PE_ESTADO_CIVIL>
-                  <PE_CEDULA_CONYUGE>string</PE_CEDULA_CONYUGE>
-                  <PE_NOMBRE_CONYUGE>string</PE_NOMBRE_CONYUGE>
-                  <PE_NACIONALIDAD>string</PE_NACIONALIDAD>
-                  <PE_CELULAR>string</PE_CELULAR>
-                  <PE_TELEFONO>string</PE_TELEFONO>
-                </perPersona>
-              </fn_consulta_buscarPersonaCompletoResponse>
-            </soap:Body>
-          </soap:Envelope>
+                  <PE_FECH_INSC_FALLECIMIENTO>dateTime</PE_FECH_INSC_FALLECIMIE
