@@ -32,8 +32,8 @@ spec:
   type: service
   lifecycle: production
   owner: grupo-msp
-relations:
-  - type: hasPart
-    targetRef: api:default/mdmq-personas-soap-api
-  - type: hasPart  
-    targetRef: api:default/mdmq-proveedores-telf-soap-api
+  relations:
+    - type: hasPart
+      targetRef: api:default/mdmq-personas-soap-api
+    - type: hasPart
+      targetRef: api:default/mdmq-proveedores-telf-soap-api
