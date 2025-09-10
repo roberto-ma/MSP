@@ -6,13 +6,15 @@ metadata:
   description: |
     Conjunto de servicios web SOAP del Municipio del Distrito Metropolitano de Quito
     para consulta de personas y proveedores de telefonía.
+    
+    **APIs disponibles:**
+    - 🔍 Consulta de Personas
+    - 📞 Proveedores de Telefonía
   tags:
     - soap
     - mdmq
     - gobierno
     - servicios-web
-  annotations:
-    backstage.io/source-location: url:https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx
   links:
     - url: https://www.quito.gob.ec
       title: Portal Oficial MDMQ
@@ -26,4 +28,4 @@ spec:
   owner: user:guest
   providesApis:
     - soap-personas
-    - mdmq-proveedores-telf-soap-api
+    - soap-proveedores-telefonia
