@@ -1,4 +1,7 @@
-# Definición del sistema
+# ========================================
+# ARCHIVO 1: sistema-mdmq.yaml
+# Sistema principal que agrupa todas las APIs
+# ========================================
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
@@ -29,8 +32,12 @@ metadata:
     - url: https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx
       title: Endpoint Principal
       icon: web
+  relations:
+    - type: hasPart
+      targetRef: api:default/mdmq-personas-soap-api
+    - type: hasPart  
+      targetRef: api:default/mdmq-proveedores-telf-soap-api
 spec:
   type: service
   lifecycle: production
   owner: grupo-msp
-
