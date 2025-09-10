@@ -12,8 +12,7 @@ spec:
   type: soap
   lifecycle: production
   owner: equipo-de-soporte
-  definition:
-    href: 'http://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?WSDL'
+  definition: 'http://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?WSDL'
   routes:
     - url: '/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx'
       method: POST
@@ -81,3 +80,4 @@ spec:
                 </fn_consulta_buscarPersonaCompletoResponse>
               </soap:Body>
             </soap:Envelope>
+
