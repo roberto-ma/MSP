@@ -80,4 +80,3 @@ spec:
                 </fn_consulta_buscarPersonaCompletoResponse>
               </soap:Body>
             </soap:Envelope>
-
