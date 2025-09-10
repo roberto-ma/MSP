@@ -18,7 +18,6 @@ metadata:
     - personas
     - identificacion
     - consultas
-    - registro-civil
   annotations:
     backstage.io/source-location: url:https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx
     backstage.io/techdocs-ref: dir:.
