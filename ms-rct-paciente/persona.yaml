@@ -78,3 +78,156 @@ spec:
     | `strTipoIdentificacion` | string | Tipo de identificación (CI, RUC, PAS, etc.) | ✓ |
     | `strAccion` | string | Acción a realizar en la consulta | ✓ |
     
+    #### Ejemplo de Request
+    
+    ```xml
+    POST /MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx HTTP/1.1
+    Host: pam.quito.gob.ec
+    Content-Type: text/xml; charset=utf-8
+    SOAPAction: "http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto"
+    
+    <?xml version="1.0" encoding="utf-8"?>
+    <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+      <soap:Header>
+        <Cabecera xmlns="http://mdmq.quito.gob.ec/">
+          <UserName>usuario_sistema</UserName>
+          <Password>password_seguro</Password>
+        </Cabecera>
+      </soap:Header>
+      <soap:Body>
+        <fn_consulta_buscarPersonaCompleto xmlns="http://mdmq.quito.gob.ec/">
+          <strIdentificacion>1234567890</strIdentificacion>
+          <strTipoIdentificacion>CI</strTipoIdentificacion>
+          <strAccion>CONSULTA</strAccion>
+        </fn_consulta_buscarPersonaCompleto>
+      </soap:Body>
+    </soap:Envelope>
+    ```
+    
+    #### Estructura de Respuesta
+    
+    La respuesta incluye la siguiente información:
+    
+    | Campo | Tipo | Descripción |
+    |-------|------|-------------|
+    | `fn_consulta_buscarPersonaCompletoResult` | int | Código de resultado de la operación |
+    | `strMensaje` | string | Mensaje descriptivo del resultado |
+    | `perPersona` | object | Objeto con los datos de la persona |
+    
+    #### Datos de la Persona (perPersona)
+    
+    | Campo | Tipo | Descripción |
+    |-------|------|-------------|
+    | `PE_PERSONA_ID` | long | ID único de la persona en el sistema |
+    | `PE_DENOMINACION` | string | Denominación completa |
+    | `PE_NOMBRES` | string | Nombres de la persona |
+    | `PE_APELLIDOS` | string | Apellidos de la persona |
+    | `PE_RAZON_SOCIAL` | string | Razón social (para personas jurídicas) |
+    | `PE_NUM_IDENTIFICACION` | string | Número de identificación |
+    | `PE_TIP_IDENTIFICACION` | string | Tipo de identificación |
+    | `PE_TIP_PERSONA` | string | Tipo de persona (Natural/Jurídica) |
+    | `PE_MAIL` | string | Correo electrónico |
+    | `PE_ESTADO_TRAN` | string | Estado de la transacción |
+    | `PE_ESTADO_DESC` | string | Descripción del estado |
+    | `PE_FECHA_NACIMIENTO` | dateTime | Fecha de nacimiento |
+    | `PE_FECHA_FALLECIMIENTO` | dateTime | Fecha de fallecimiento |
+    | `PE_FECH_INSC_FALLECIMIENTO` | dateTime | Fecha inscripción fallecimiento |
+    | `PE_ESTADO_CIVIL` | string | Estado civil |
+    | `PE_CEDULA_CONYUGE` | string | Cédula del cónyuge |
+    | `PE_NOMBRE_CONYUGE` | string | Nombre del cónyuge |
+    | `PE_NACIONALIDAD` | string | Nacionalidad |
+    | `PE_CELULAR` | string | Número de celular |
+    | `PE_TELEFONO` | string | Número de teléfono |
+    
+    #### Ejemplo de Response
+    
+    ```xml
+    HTTP/1.1 200 OK
+    Content-Type: text/xml; charset=utf-8
+    
+    <?xml version="1.0" encoding="utf-8"?>
+    <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+      <soap:Body>
+        <fn_consulta_buscarPersonaCompletoResponse xmlns="http://mdmq.quito.gob.ec/">
+          <fn_consulta_buscarPersonaCompletoResult>1</fn_consulta_buscarPersonaCompletoResult>
+          <strMensaje>Consulta exitosa</strMensaje>
+          <perPersona>
+            <PE_PERSONA_ID>123456</PE_PERSONA_ID>
+            <PE_DENOMINACION>JUAN CARLOS PEREZ RODRIGUEZ</PE_DENOMINACION>
+            <PE_NOMBRES>JUAN CARLOS</PE_NOMBRES>
+            <PE_APELLIDOS>PEREZ RODRIGUEZ</PE_APELLIDOS>
+            <PE_NUM_IDENTIFICACION>1234567890</PE_NUM_IDENTIFICACION>
+            <PE_TIP_IDENTIFICACION>CI</PE_TIP_IDENTIFICACION>
+            <PE_TIP_PERSONA>NATURAL</PE_TIP_PERSONA>
+            <PE_MAIL>juan.perez@email.com</PE_MAIL>
+            <PE_NACIONALIDAD>ECUATORIANA</PE_NACIONALIDAD>
+            <!-- ... más campos ... -->
+          </perPersona>
+        </fn_consulta_buscarPersonaCompletoResponse>
+      </soap:Body>
+    </soap:Envelope>
+    ```
+    
+    ## Códigos de Respuesta
+    
+    | Código | Descripción |
+    |--------|-------------|
+    | 1 | Consulta exitosa - Persona encontrada |
+    | 0 | Persona no encontrada |
+    | -1 | Error en la consulta |
+    | -2 | Parámetros inválidos |
+    | -3 | Error de autenticación |
+    
+    ## Consideraciones de Seguridad
+    
+    - ✅ Autenticación requerida mediante usuario/contraseña
+    - ✅ Conexión HTTPS para protección de datos
+    - ⚠️ Los datos personales están sujetos a la Ley de Protección de Datos
+    - ⚠️ Uso restringido a entidades autorizadas
+    
+    ## Limitaciones y Uso
+    
+    - **Rate Limiting**: Consultar con el administrador del sistema
+    - **Horarios**: Verificar disponibilidad 24/7
+    - **Mantenimiento**: Programado según cronograma institucional
+    - **Soporte**: Contactar mesa de ayuda MDMQ
+    
+    ## Contacto y Soporte
+    
+    - **Institución**: Municipio del Distrito Metropolitano de Quito
+    - **Área**: Sistemas de Información
+    - **Web**: https://www.quito.gob.ec
+    - **Documentación técnica**: Disponible previa autorización
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: sistema-personas-mdmq
+  title: "Sistema de Gestión de Personas MDMQ"
+  description: |
+    Sistema integral para la gestión y consulta de información de personas 
+    naturales y jurídicas registradas en el Municipio de Quito.
+  tags:
+    - mdmq
+    - gobierno
+    - registro
+    - personas
+spec:
+  type: service
+  lifecycle: production
+  owner: municipio-quito
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: municipio-quito
+  title: "Municipio del Distrito Metropolitano de Quito"
+  description: |
+    Gobierno Autónomo Descentralizado del Distrito Metropolitano de Quito
+    Área de Sistemas de Información y Tecnología
+spec:
+  type: team
+  profile:
+    displayName: MDMQ - Sistemas
+    email: sistemas@quito.gob.ec
+  children: []
