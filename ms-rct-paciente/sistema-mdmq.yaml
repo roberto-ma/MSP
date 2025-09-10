@@ -1,7 +1,3 @@
-# ========================================
-# ARCHIVO 1: sistema-mdmq.yaml
-# Sistema principal que agrupa todas las APIs
-# ========================================
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
@@ -35,7 +31,7 @@ metadata:
   relations:
     - type: hasPart
       targetRef: api:default/mdmq-personas-soap-api
-    - type: hasPart  
+    - type: hasPart
       targetRef: api:default/mdmq-proveedores-telf-soap-api
 spec:
   type: service
