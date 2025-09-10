@@ -12,9 +12,7 @@ spec:
   type: soap
   lifecycle: production
   owner: equipo-de-soporte
-  definition: 
-    href: 'http://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?WSDL'
-    type: wsdl
+  definition: "http://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?WSDL"  # Asegúrate de que esté en comillas
   routes:
     - url: '/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx'
       method: POST
