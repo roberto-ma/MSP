@@ -1,22 +1,29 @@
 apiVersion: backstage.io/v1alpha1
-kind: API
+kind: Component
 metadata:
-  name: mdmq-personas-soap-api
-  title: "API SOAP - Consulta de Personas MDMQ"
-  description: "Servicio web SOAP para consulta de personas del MDMQ"
+  name: mdmq-servicios-web
+  title: "Servicios Web MDMQ"
+  description: |
+    Conjunto de servicios web SOAP del Municipio del Distrito Metropolitano de Quito
+    para consulta de personas y proveedores de telefonía.
   tags:
     - soap
     - mdmq
-    - personas
+    - gobierno
+    - servicios-web
+  annotations:
+    backstage.io/source-location: url:https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx
+  links:
+    - url: https://www.quito.gob.ec
+      title: Portal Oficial MDMQ
+      icon: web
+    - url: https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx?wsdl
+      title: WSDL Principal
+      icon: docs
 spec:
-  type: soap
+  type: service
   lifecycle: production
   owner: user:guest
-  definition: |
-    # API SOAP - Consulta de Personas MDMQ
-    
-    Servicio para consultar información de personas registradas en el MDMQ.
-    
-    **Endpoint**: https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx
-    
-    **SOAPAction**: "http://mdmq.quito.gob.ec/fn_consulta_buscarPersonaCompleto"
+  providesApis:
+    - soap-personas
+    - mdmq-proveedores-telf-soap-api
