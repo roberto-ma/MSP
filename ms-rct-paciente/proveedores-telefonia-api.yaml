@@ -1,0 +1,88 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: mdmq-proveedores-telf-soap-api
+  title: "API SOAP - Proveedores de Telefonía"
+  description: |
+    Servicio web SOAP para la consulta del catálogo de proveedores de 
+    servicios de telefonía registrados en el sistema MDMQ. Retorna 
+    la lista completa de operadores telefónicos disponibles.
+  tags:
+    - soap
+    - proveedores
+    - telefonia
+    - telecomunicaciones
+    - catalogo
+  annotations:
+    backstage.io/source-location: url:https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx
+spec:
+  type: soap
+  lifecycle: production
+  owner: grupo-msp
+  system: sistema-personas-mdmq
+  definition: |
+    # API SOAP - Proveedores de Telefonía MDMQ
+    
+    ## Información General
+    
+    **Endpoint**: https://pam.quito.gob.ec/MDMQ_WS_Personas2012/Presentacion/PersonaSQL.asmx
+    
+    **Protocolo**: SOAP 1.1/1.2
+    
+    **Namespace**: http://mdmq.quito.gob.ec/
+    
+    ## Operación: fn_consulta_proveedor_telf
+    
+    **SOAPAction**: "http://mdmq.quito.gob.ec/fn_consulta_proveedor_telf"
+    
+    ### Parámetros de Entrada
+    
+    Esta operación no requiere parámetros adicionales, solo autenticación.
+    
+    ### Ejemplo Request
+    
+    ```xml
+    <?xml version="1.0" encoding="utf-8"?>
+    <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+      <soap:Header>
+        <Cabecera xmlns="http://mdmq.quito.gob.ec/">
+          <UserName>usuario</UserName>
+          <Password>password</Password>
+        </Cabecera>
+      </soap:Header>
+      <soap:Body>
+        <fn_consulta_proveedor_telf xmlns="http://mdmq.quito.gob.ec/" />
+      </soap:Body>
+    </soap:Envelope>
+    ```
+    
+    ### Estructura de Respuesta
+    
+    La respuesta contiene una lista de proveedores:
+    
+    ```xml
+    <lstPerProveedorTelf>
+      <clsPerProveedorTelf>
+        <PRV_ID>001</PRV_ID>
+        <PRV_DESCRIPCION>CLARO ECUADOR</PRV_DESCRIPCION>
+      </clsPerProveedorTelf>
+      <clsPerProveedorTelf>
+        <PRV_ID>002</PRV_ID>
+        <PRV_DESCRIPCION>MOVISTAR ECUADOR</PRV_DESCRIPCION>
+      </clsPerProveedorTelf>
+    </lstPerProveedorTelf>
+    ```
+    
+    ### Campos de Respuesta
+    
+    | Campo | Tipo | Descripción |
+    |-------|------|-------------|
+    | `PRV_ID` | string | Identificador único del proveedor |
+    | `PRV_DESCRIPCION` | string | Nombre del proveedor de telefonía |
+    
+    ### Casos de Uso
+    
+    - Poblar listas desplegables en formularios
+    - Validación de proveedores en sistemas
+    - Sincronización de catálogos
+    - Integración con sistemas terceros
